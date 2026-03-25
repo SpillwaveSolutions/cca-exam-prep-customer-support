@@ -79,7 +79,7 @@
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | SETUP-01 | Phase 1 | Complete |
-| SETUP-02 | Phase 1 | Pending |
+| SETUP-02 | Phase 1 | Complete |
 | SETUP-03 | Phase 1 | Complete |
 | CORE-01 | Phase 2 | Pending |
 | CORE-02 | Phase 2 | Pending |
@@ -99,7 +99,7 @@
 | OPTIM-02 | Phase 4 | Pending |
 | HANDOFF-01 | Phase 5 | Pending |
 | HANDOFF-02 | Phase 5 | Pending |
-| NB-01 | Phase 1 | Pending |
+| NB-01 | Phase 1 | Complete |
 | NB-02 | Phase 3 | Pending |
 | NB-03 | Phase 3 | Pending |
 | NB-04 | Phase 3 | Pending |
