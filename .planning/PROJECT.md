@@ -12,7 +12,12 @@ Students can run code that demonstrates every CCA Customer Support anti-pattern 
 
 ### Validated
 
-(None yet — ship to validate)
+- [x] Importable Python package skeleton with 6 sub-packages — Validated in Phase 1: Project Foundation
+- [x] Notebook template with anti-pattern vs correct-pattern visual differentiation (red/green HTML boxes) — Validated in Phase 1
+- [x] Setup notebook (00) with 4 environment verification checks — Validated in Phase 1
+- [x] Pre-commit hooks (nbstripout + ruff) — Validated in Phase 1
+- [x] print_usage and compare_results helpers for token accounting — Validated in Phase 1
+- [x] Taskfile.yml for automated project setup and verification — Validated in Phase 1
 
 ### Active
 
@@ -68,4 +73,4 @@ Rick has completed the Claude API course on Anthropic Academy and works in Pytho
 | claude -p --bare for CI/CD | Demonstrates CCA Article 2 best practices in the project itself | — Pending |
 
 ---
-*Last updated: 2026-03-25 after initialization*
+*Last updated: 2026-03-25 after Phase 1 completion*
