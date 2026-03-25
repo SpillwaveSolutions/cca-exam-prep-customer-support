@@ -30,11 +30,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. Notebook 00 (setup) runs end-to-end, verifying ANTHROPIC_API_KEY and SDK version
   3. Pre-commit hooks (nbstripout, ruff) run on `git commit` and reject unstripped notebooks or lint failures
   4. Notebook template exists with correct-before-anti-pattern section ordering and `print_usage` helper
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 01-01: TBD
-- [ ] 01-02: TBD
+- [ ] 01-01-PLAN.md — Package skeleton, __init__.py files, __main__.py, pre-commit hooks
+- [ ] 01-02-PLAN.md — Notebook helpers (print_usage, compare_results) and setup notebook (00)
 
 ### Phase 2: Models, Services, and Core Loop
 **Goal**: The 5-tool customer support agent can process a customer message through a complete agentic loop using simulated services
@@ -122,7 +122,7 @@ Note: Phases 3 and 4 are architecturally independent (both depend on Phase 2). T
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Project Foundation | 0/2 | Not started | - |
+| 1. Project Foundation | 0/2 | Planning complete | - |
 | 2. Models, Services, and Core Loop | 0/2 | Not started | - |
 | 3. Callbacks, Enforcement, and First Notebooks | 0/3 | Not started | - |
 | 4. Caching and Context Notebooks | 0/2 | Not started | - |
