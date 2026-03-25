@@ -8,7 +8,7 @@ from __future__ import annotations
 from tabulate import tabulate
 
 # ---------------------------------------------------------------------------
-# Claude Sonnet 4 pricing (per million tokens) as of 2026-03-25
+# Claude Sonnet 4.6 pricing (per million tokens) as of 2026-03-25
 # Source: https://www.anthropic.com/pricing
 # ---------------------------------------------------------------------------
 _PRICE_INPUT = 3.00  # $ per 1M input tokens
@@ -17,12 +17,12 @@ _PRICE_CACHE_READ = 0.30  # $ per 1M cache-read tokens (10% of input)
 _PRICE_CACHE_WRITE = 3.75  # $ per 1M cache-write tokens (125% of input)
 
 
-def print_usage(response: object, model: str = "claude-sonnet-4-20250514") -> None:
+def print_usage(response: object, model: str = "claude-sonnet-4-6-20260217") -> None:
     """Print a formatted token-usage summary with estimated USD cost.
 
     Args:
         response: Anthropic messages.create() response object with a .usage attribute.
-        model: Model name string to display. Defaults to claude-sonnet-4-20250514.
+        model: Model name string to display. Defaults to claude-sonnet-4-6-20260217.
 
     Token accounting:
         total_input = input_tokens + cache_read_input_tokens + cache_creation_input_tokens

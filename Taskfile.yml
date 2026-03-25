@@ -1,0 +1,86 @@
+version: '3'
+
+dotenv: ['.env']
+
+vars:
+  NOTEBOOK_DIR: notebooks
+  SETUP_NOTEBOOK: "{{.NOTEBOOK_DIR}}/00_setup.ipynb"
+
+tasks:
+  default:
+    desc: Show available tasks
+    cmds:
+      - task --list
+
+  install:
+    desc: Install all dependencies (core + dev + notebooks)
+    cmds:
+      - poetry install --with notebooks
+    sources:
+      - pyproject.toml
+      - poetry.lock
+    generates:
+      - .venv/**/*
+
+  check-key:
+    desc: Verify ANTHROPIC_API_KEY is set
+    silent: true
+    cmds:
+      - |
+        if [ -z "${ANTHROPIC_API_KEY}" ] || [ "${ANTHROPIC_API_KEY}" = "your-api-key-here" ]; then
+          echo ""
+          echo "=========================================="
+          echo "  ANTHROPIC_API_KEY not configured"
+          echo "=========================================="
+          echo ""
+          echo "To fix, create a .env file:"
+          echo ""
+          echo "  cp .env.example .env"
+          echo "  # Edit .env and add your real API key"
+          echo ""
+          echo "Or export it directly:"
+          echo ""
+          echo "  export ANTHROPIC_API_KEY=sk-ant-..."
+          echo ""
+          exit 1
+        fi
+        echo "[OK] ANTHROPIC_API_KEY is set"
+
+  setup:
+    desc: Run the setup notebook to verify your environment
+    deps: [install, check-key]
+    cmds:
+      - poetry run jupyter lab "{{.SETUP_NOTEBOOK}}"
+
+  notebook:
+    desc: Launch Jupyter Lab (general use)
+    deps: [install, check-key]
+    cmds:
+      - poetry run jupyter lab
+
+  test:
+    desc: Run all tests
+    deps: [install]
+    cmds:
+      - poetry run pytest tests/ -q
+
+  lint:
+    desc: Run linter
+    deps: [install]
+    cmds:
+      - poetry run ruff check src/
+
+  format:
+    desc: Format code
+    deps: [install]
+    cmds:
+      - poetry run ruff format src/
+
+  verify:
+    desc: Run the full verification suite (tests + lint + import check)
+    deps: [install]
+    cmds:
+      - poetry run pytest tests/ -q
+      - poetry run ruff check src/
+      - cmd: poetry run python -c "import customer_service; print('Package OK')"
+      - cmd: poetry run python -m customer_service
