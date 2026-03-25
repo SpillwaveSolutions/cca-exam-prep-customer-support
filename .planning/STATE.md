@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 01-project-foundation-01-01-PLAN.md
-last_updated: "2026-03-25T23:14:55.542Z"
+stopped_at: Completed 01-project-foundation-01-02-PLAN.md
+last_updated: "2026-03-25T23:21:38.960Z"
 progress:
   total_phases: 6
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 2
-  completed_plans: 1
+  completed_plans: 2
 ---
 
 # Project State
@@ -47,6 +47,7 @@ Plan: 1 of 2
 
 *Updated after each plan completion*
 | Phase 01-project-foundation P01 | 2 | 2 tasks | 15 files |
+| Phase 01-project-foundation P02 | 5 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -61,6 +62,8 @@ Recent decisions affecting current work:
 - [Phase 01-project-foundation]: Phase 1 __init__.py kept minimal (version + docstring only) to avoid ImportError from missing Phase 2 modules
 - [Phase 01-project-foundation]: Pre-commit hook mode for nbstripout (not git filter) for explicit, auditable behavior
 - [Phase 01-project-foundation]: ruff types_or: [python, pyi, jupyter] required for notebook linting to include .ipynb files
+- [Phase 01-project-foundation]: Use (major, minor) tuple comparison instead of sys.version_info >= (3, 13) in notebooks to avoid ruff UP036 error under py313 minimum
+- [Phase 01-project-foundation]: Hardcoded cost rate constants in helpers.py (_PRICE_INPUT=3.00, etc.) for student visibility
 
 ### Pending Todos
 
@@ -74,6 +77,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-25T23:14:55.540Z
-Stopped at: Completed 01-project-foundation-01-01-PLAN.md
+Last session: 2026-03-25T23:21:38.958Z
+Stopped at: Completed 01-project-foundation-01-02-PLAN.md
 Resume file: None
