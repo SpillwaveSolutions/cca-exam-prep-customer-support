@@ -1,0 +1,39 @@
+[tool.poetry]
+name = "cca-customer-service"
+version = "0.1.0"
+description = "CCA Exam Prep: Customer Support Resolution Agent — Hands-on coding example"
+authors = ["Rick Hightower"]
+readme = "README.md"
+packages = [{include = "customer_service", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.13"
+anthropic = ">=0.42.0"
+pydantic = ">=2.0"
+python-dotenv = ">=1.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=8.0"
+ruff = ">=0.4"
+mypy = ">=1.10"
+pre-commit = ">=3.0"
+nbstripout = ">=0.7"
+
+[tool.poetry.group.notebooks.dependencies]
+jupyter = ">=1.0"
+ipykernel = ">=6.0"
+tabulate = ">=0.9"
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
