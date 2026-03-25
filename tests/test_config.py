@@ -74,3 +74,19 @@ def test_pyproject_has_nbstripout() -> None:
     pyproject_path = _project_root() / "pyproject.toml"
     content = pyproject_path.read_text()
     assert "nbstripout" in content, "nbstripout not in pyproject.toml dev dependencies"
+
+
+def test_setup_notebook_exists() -> None:
+    """notebooks/00_setup.ipynb exists."""
+    nb_path = _project_root() / "notebooks" / "00_setup.ipynb"
+    assert nb_path.exists(), "notebooks/00_setup.ipynb not found"
+
+
+def test_setup_notebook_has_cells() -> None:
+    """Setup notebook has at least 10 cells."""
+    import json
+
+    nb_path = _project_root() / "notebooks" / "00_setup.ipynb"
+    nb = json.loads(nb_path.read_text())
+    cell_count = len(nb["cells"])
+    assert cell_count >= 10, f"Expected at least 10 cells, got {cell_count}"
