@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-stopped_at: Phase 3 context gathered
-last_updated: "2026-03-26T06:00:03.646Z"
+stopped_at: "Completed 03-01-PLAN.md: callbacks enforcement layer"
+last_updated: "2026-03-26T19:49:52.850Z"
 progress:
   total_phases: 6
   completed_phases: 2
-  total_plans: 4
-  completed_plans: 4
+  total_plans: 7
+  completed_plans: 5
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-25)
 
 **Core value:** Students can run code that demonstrates every CCA Customer Support anti-pattern failure and its correct architectural fix
-**Current focus:** Phase 02 — models-services-and-core-loop
+**Current focus:** Phase 03 — callbacks-enforcement-and-first-notebooks
 
 ## Current Position
 
-Phase: 02 (models-services-and-core-loop) — EXECUTING
-Plan: 2 of 2
+Phase: 03 (callbacks-enforcement-and-first-notebooks) — EXECUTING
+Plan: 1 of 3
 
 ## Performance Metrics
 
@@ -50,6 +50,7 @@ Plan: 2 of 2
 | Phase 01-project-foundation P02 | 5 | 2 tasks | 4 files |
 | Phase 02-models-services-and-core-loop P01 | 184 | 2 tasks | 13 files |
 | Phase 02-models-services-and-core-loop P02 | 232 | 2 tasks | 11 files |
+| Phase 03-callbacks-enforcement-and-first-notebooks P01 | 314 | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -72,6 +73,8 @@ Recent decisions affecting current work:
 - [Phase 02-models-services-and-core-loop]: Tool descriptions use lowercase 'does NOT' — CCA-compliant and test-matching
 - [Phase 02-models-services-and-core-loop]: Agent loop checks stop_reason \!= 'tool_use' (not == 'end_turn') to handle max_tokens and other stop reasons gracefully
 - [Phase 02-models-services-and-core-loop]: Tool result messages contain ONLY tool_result blocks — no text alongside (avoids Claude API pitfall)
+- [Phase 03-callbacks-enforcement-and-first-notebooks]: compliance_callback handles both flat {details} and nested {entry.details} shapes to match log_interaction output format
+- [Phase 03-callbacks-enforcement-and-first-notebooks]: context dict created in run_agent_loop so all tool calls in a session share escalation state across iterations
 
 ### Pending Todos
 
@@ -85,6 +88,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T06:00:03.644Z
-Stopped at: Phase 3 context gathered
-Resume file: .planning/phases/03-callbacks-enforcement-and-first-notebooks/03-CONTEXT.md
+Last session: 2026-03-26T19:49:52.847Z
+Stopped at: Completed 03-01-PLAN.md: callbacks enforcement layer
+Resume file: None
