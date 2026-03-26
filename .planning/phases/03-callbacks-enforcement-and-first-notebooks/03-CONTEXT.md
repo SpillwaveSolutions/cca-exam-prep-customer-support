@@ -19,31 +19,39 @@ No prompt caching (Phase 4). No handoff patterns (Phase 5). No coordinator-subag
 - Hook point: dispatch() in handlers.py — the single place every tool result passes through
 - Callback logic: separate `agent/callbacks.py` module (not inline in dispatch or agent_loop)
 - Signature: `dispatch(tool_name, input_dict, services, context, callbacks=...)`
+- **Per-tool callback registry**: callbacks is a `dict[str, Callable]` mapping tool_name → callback function. Each callback ONLY fires for its registered tool. NOT a shared list that runs all callbacks for every tool.
 - Callback input: `(tool_name, input_dict, result_dict, context, services)`
-- Callback output: `action="allow" | "replace_result" | "escalate"` plus replacement payload/reason
+- Callback output: `action="allow" | "replace_result" | "block"` plus replacement payload/reason
 - Context parameter must include the current user message or structured conversation summary (needed for legal keyword detection)
-- On escalate: return one replacement JSON tool result and enqueue the escalation directly; do NOT fabricate a second Claude tool call inside the same cycle
+- **On block (process_refund)**: return a JSON result telling Claude the refund was blocked and must be escalated. Do NOT directly enqueue escalation or fabricate a tool call. Let Claude naturally call `escalate_to_human` on its next turn. This preserves the expected tool trace (lookup_customer → check_policy → process_refund[blocked] → escalate_to_human).
+- **On replace_result (log_interaction)**: return the redacted version as the tool result
 
 ### Vetoable tool pattern
 - Only process_refund is two-step vetoable (irreversible financial side effect)
-  - Step 1: compute proposed refund result (no commit)
-  - Step 2: dispatch runs callbacks on proposed result
-  - Step 3: commit only if callbacks return action="allow"
+  - Step 1: compute proposed refund result (no commit to FinancialSystem)
+  - Step 2: dispatch runs the process_refund callback on proposed result
+  - Step 3: if callback returns action="allow" → commit refund to FinancialSystem
+  - Step 4: if callback returns action="block" → return JSON: {"status": "blocked", "reason": "...", "action_required": "escalate_to_human"} — FinancialSystem is UNTOUCHED
+  - **Test requirement**: after a blocked refund, `FinancialSystem.get_processed()` must be empty (this IS the veto guarantee)
 - escalate_to_human: single-step (append-only, safe — it IS the fallback action)
 - log_interaction: single-step, but callback may redact/replace the details field BEFORE the handler writes to audit log
-- lookup_customer and check_policy: pure reads, not vetoable
+- lookup_customer and check_policy: pure reads, callbacks set context flags only
 
 ### Escalation callback rules (CCA-compliant, deterministic)
-- lookup_customer callback: detect VIP tier flag, detect account_closure flag → set context flags
+- lookup_customer callback: detect VIP tier flag, detect account_closure flag → set context flags for downstream callbacks
 - check_policy callback: detect amount > $500 (requires_review) → set context flag
-- process_refund callback: HARD STOP and force escalation if ANY of: VIP, account_closure, legal_complaint, amount > $500
-- log_interaction callback: compliance/redaction enforcement — regex-replace credit card patterns before write
+- process_refund callback: BLOCK refund if ANY of: VIP, account_closure, legal_complaint, amount > $500. Returns blocked result with "action_required": "escalate_to_human" so Claude calls escalate_to_human naturally on its next turn.
+- log_interaction callback: compliance/redaction enforcement — regex-replace credit card patterns in details before write
+- **Each callback guards on tool_name** — per-tool registry means callbacks only fire for their registered tool, never for unrelated tools
 
 ### Anti-pattern 1: Confidence escalation (confidence_escalation.py)
 - Scenario: C003, $600 refund
 - System prompt tells agent: "Rate your confidence 0-100. If below 70, escalate. Otherwise proceed."
-- Observable failure: Claude reports high confidence (>80%), approves/attempts the $600 refund
-- Correct pattern: callback catches amount > $500, forces escalation regardless of confidence
+- **Observable failure: Claude reports high confidence and does NOT escalate to human** — it tries to handle the case itself (regardless of whether the refund is policy-approved or rejected). The failure is about ROUTING, not refund approval.
+- Correct pattern: callback on process_refund detects amount > $500, blocks refund, Claude then calls `escalate_to_human` naturally
+- **NB01 checks `escalation_queue`**, NOT `financial_system.get_processed()`. The question is "was the case escalated?" not "was the refund processed?"
+  - Anti-pattern: escalation_queue is empty (Claude didn't escalate — WRONG)
+  - Correct: escalation_queue has an EscalationRecord (CORRECT)
 - Mention inconsistency across runs briefly in markdown as additional risk, but NOT as the core demo
 - CCA exam lesson: self-reported confidence is ALWAYS the wrong answer for escalation routing
 
