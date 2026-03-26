@@ -65,8 +65,8 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 03-01-PLAN.md — PostToolUse callback framework, escalation rules, compliance redaction, two-step vetoable dispatch
-- [ ] 03-02-PLAN.md — 3 anti-pattern modules (confidence escalation, prompt compliance, Swiss Army 15-tool)
+- [x] 03-01-PLAN.md — PostToolUse callback framework, escalation rules, compliance redaction, two-step vetoable dispatch
+- [x] 03-02-PLAN.md — 3 anti-pattern modules (confidence escalation, prompt compliance, Swiss Army 15-tool)
 - [ ] 03-03-PLAN.md — Notebooks 01 (escalation), 02 (compliance), 03 (tool design) with smoke tests
 
 ### Phase 4: Caching and Context Notebooks

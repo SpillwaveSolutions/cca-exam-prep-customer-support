@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-stopped_at: "Completed 03-01-PLAN.md: callbacks enforcement layer"
-last_updated: "2026-03-26T19:49:52.850Z"
+stopped_at: "Completed 03-02-PLAN.md: anti-pattern modules"
+last_updated: "2026-03-26T19:50:30.000Z"
 progress:
   total_phases: 6
   completed_phases: 2
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-03-25)
 ## Current Position
 
 Phase: 03 (callbacks-enforcement-and-first-notebooks) — EXECUTING
-Plan: 1 of 3
+Plan: 2 of 3
 
 ## Performance Metrics
 
@@ -75,6 +75,7 @@ Recent decisions affecting current work:
 - [Phase 02-models-services-and-core-loop]: Tool result messages contain ONLY tool_result blocks — no text alongside (avoids Claude API pitfall)
 - [Phase 03-callbacks-enforcement-and-first-notebooks]: compliance_callback handles both flat {details} and nested {entry.details} shapes to match log_interaction output format
 - [Phase 03-callbacks-enforcement-and-first-notebooks]: context dict created in run_agent_loop so all tool calls in a session share escalation state across iterations
+- [Phase 03-callbacks-enforcement-and-first-notebooks]: run_agent_loop extended with optional tools parameter (default None = TOOLS); Swiss Army anti-pattern passes SWISS_ARMY_TOOLS
 
 ### Pending Todos
 

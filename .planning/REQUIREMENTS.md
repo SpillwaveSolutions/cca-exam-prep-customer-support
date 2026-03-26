@@ -90,9 +90,9 @@
 | ENFORCE-01 | Phase 3 | Complete |
 | ENFORCE-02 | Phase 3 | Complete |
 | ENFORCE-03 | Phase 3 | Complete |
-| ANTI-01 | Phase 3 | Pending |
-| ANTI-02 | Phase 3 | Pending |
-| ANTI-03 | Phase 3 | Pending |
+| ANTI-01 | Phase 3 | Complete |
+| ANTI-02 | Phase 3 | Complete |
+| ANTI-03 | Phase 3 | Complete |
 | ANTI-04 | Phase 4 | Pending |
 | ANTI-05 | Phase 5 | Pending |
 | OPTIM-01 | Phase 4 | Pending |
