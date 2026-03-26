@@ -62,12 +62,12 @@ Plans:
   3. The 15-tool Swiss Army agent produces worse tool selection on the same query where the 5-tool agent succeeds cleanly
   4. Notebooks 01 (escalation), 02 (compliance), and 03 (tool design) each run end-to-end showing anti-pattern failure followed by correct-pattern success
   5. Each notebook displays token usage via `print_usage` helper so students see cost differences
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 03-01: TBD
-- [ ] 03-02: TBD
-- [ ] 03-03: TBD
+- [ ] 03-01-PLAN.md — PostToolUse callback framework, escalation rules, compliance redaction, two-step vetoable dispatch
+- [ ] 03-02-PLAN.md — 3 anti-pattern modules (confidence escalation, prompt compliance, Swiss Army 15-tool)
+- [ ] 03-03-PLAN.md — Notebooks 01 (escalation), 02 (compliance), 03 (tool design) with smoke tests
 
 ### Phase 4: Caching and Context Notebooks
 **Goal**: Students can observe prompt caching savings with concrete token numbers and compare structured context summaries against raw transcript bloat
