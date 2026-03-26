@@ -100,9 +100,9 @@
 | HANDOFF-01 | Phase 5 | Pending |
 | HANDOFF-02 | Phase 5 | Pending |
 | NB-01 | Phase 1 | Complete |
-| NB-02 | Phase 3 | Pending |
-| NB-03 | Phase 3 | Pending |
-| NB-04 | Phase 3 | Pending |
+| NB-02 | Phase 3 | Complete |
+| NB-03 | Phase 3 | Complete |
+| NB-04 | Phase 3 | Complete |
 | NB-05 | Phase 4 | Pending |
 | NB-06 | Phase 4 | Pending |
 | NB-07 | Phase 5 | Pending |

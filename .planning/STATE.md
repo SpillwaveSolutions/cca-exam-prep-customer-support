@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-stopped_at: "Completed 03-02-PLAN.md: anti-pattern modules"
-last_updated: "2026-03-26T19:50:30.000Z"
+stopped_at: "Completed 03-03-PLAN.md: first three CCA teaching notebooks"
+last_updated: "2026-03-26T19:58:51.845Z"
 progress:
   total_phases: 6
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 7
-  completed_plans: 5
+  completed_plans: 7
 ---
 
 # Project State
@@ -51,6 +51,7 @@ Plan: 2 of 3
 | Phase 02-models-services-and-core-loop P01 | 184 | 2 tasks | 13 files |
 | Phase 02-models-services-and-core-loop P02 | 232 | 2 tasks | 11 files |
 | Phase 03-callbacks-enforcement-and-first-notebooks P01 | 314 | 2 tasks | 6 files |
+| Phase 03-callbacks-enforcement-and-first-notebooks P03 | 292 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -76,6 +77,8 @@ Recent decisions affecting current work:
 - [Phase 03-callbacks-enforcement-and-first-notebooks]: compliance_callback handles both flat {details} and nested {entry.details} shapes to match log_interaction output format
 - [Phase 03-callbacks-enforcement-and-first-notebooks]: context dict created in run_agent_loop so all tool calls in a session share escalation state across iterations
 - [Phase 03-callbacks-enforcement-and-first-notebooks]: run_agent_loop extended with optional tools parameter (default None = TOOLS); Swiss Army anti-pattern passes SWISS_ARMY_TOOLS
+- [Phase 03-callbacks-enforcement-and-first-notebooks]: Notebook imports: helpers (local first-party) before customer_service (project) to satisfy isort I001
+- [Phase 03-callbacks-enforcement-and-first-notebooks]: make_services() helper in notebooks for explicit ServiceContainer construction (frozen dataclass, no defaults)
 
 ### Pending Todos
 
@@ -89,6 +92,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T19:49:52.847Z
-Stopped at: Completed 03-01-PLAN.md: callbacks enforcement layer
+Last session: 2026-03-26T19:58:51.843Z
+Stopped at: Completed 03-03-PLAN.md: first three CCA teaching notebooks
 Resume file: None
