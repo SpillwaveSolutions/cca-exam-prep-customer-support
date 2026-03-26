@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 02-01-PLAN.md
-last_updated: "2026-03-26T05:08:45.229Z"
+stopped_at: Completed 02-02-PLAN.md
+last_updated: "2026-03-26T05:15:25.806Z"
 progress:
   total_phases: 6
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 4
-  completed_plans: 3
+  completed_plans: 4
 ---
 
 # Project State
@@ -49,6 +49,7 @@ Plan: 2 of 2
 | Phase 01-project-foundation P01 | 2 | 2 tasks | 15 files |
 | Phase 01-project-foundation P02 | 5 | 2 tasks | 4 files |
 | Phase 02-models-services-and-core-loop P01 | 184 | 2 tasks | 13 files |
+| Phase 02-models-services-and-core-loop P02 | 232 | 2 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -68,6 +69,9 @@ Recent decisions affecting current work:
 - [Phase 02-models-services-and-core-loop]: Used StrEnum instead of (str, Enum) for CustomerTier to comply with ruff UP042
 - [Phase 02-models-services-and-core-loop]: FinancialSystem.process_refund takes policy_approved bool — FinancialSystem trusts PolicyEngine, no re-evaluation
 - [Phase 02-models-services-and-core-loop]: requires_review is amount > 500 regardless of tier — VIP $4000 still triggers review
+- [Phase 02-models-services-and-core-loop]: Tool descriptions use lowercase 'does NOT' — CCA-compliant and test-matching
+- [Phase 02-models-services-and-core-loop]: Agent loop checks stop_reason \!= 'tool_use' (not == 'end_turn') to handle max_tokens and other stop reasons gracefully
+- [Phase 02-models-services-and-core-loop]: Tool result messages contain ONLY tool_result blocks — no text alongside (avoids Claude API pitfall)
 
 ### Pending Todos
 
@@ -81,6 +85,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T05:08:45.227Z
-Stopped at: Completed 02-01-PLAN.md
+Last session: 2026-03-26T05:15:25.804Z
+Stopped at: Completed 02-02-PLAN.md
 Resume file: None

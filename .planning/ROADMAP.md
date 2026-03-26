@@ -13,7 +13,7 @@ This project builds a hands-on CCA Exam Prep coding example in 6 phases, followi
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Project Foundation** - Skeleton, notebook template, pre-commit hooks, setup notebook (completed 2026-03-25)
-- [ ] **Phase 2: Models, Services, and Core Loop** - Pydantic models, input-sensitive services, tool schemas, agentic loop, seed data
+- [x] **Phase 2: Models, Services, and Core Loop** - Pydantic models, input-sensitive services, tool schemas, agentic loop, seed data (completed 2026-03-26)
 - [ ] **Phase 3: Callbacks, Enforcement, and First Notebooks** - PostToolUse callbacks, escalation/compliance rules, anti-patterns, notebooks 01-03
 - [ ] **Phase 4: Caching and Context Notebooks** - Prompt caching with token accounting, context management, notebooks 04-05
 - [ ] **Phase 5: Handoffs, Integration, and Student Polish** - Structured handoffs, coordinator-subagent, notebooks 06-07, TODO placeholders
@@ -123,7 +123,7 @@ Note: Phases 3 and 4 are architecturally independent (both depend on Phase 2). T
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Project Foundation | 2/2 | Complete   | 2026-03-25 |
-| 2. Models, Services, and Core Loop | 1/2 | In Progress|  |
+| 2. Models, Services, and Core Loop | 2/2 | Complete   | 2026-03-26 |
 | 3. Callbacks, Enforcement, and First Notebooks | 0/3 | Not started | - |
 | 4. Caching and Context Notebooks | 0/2 | Not started | - |
 | 5. Handoffs, Integration, and Student Polish | 0/2 | Not started | - |

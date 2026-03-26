@@ -84,9 +84,9 @@
 | CORE-01 | Phase 2 | Complete |
 | CORE-02 | Phase 2 | Complete |
 | CORE-03 | Phase 2 | Complete |
-| CORE-04 | Phase 2 | Pending |
-| CORE-05 | Phase 2 | Pending |
-| CORE-06 | Phase 2 | Pending |
+| CORE-04 | Phase 2 | Complete |
+| CORE-05 | Phase 2 | Complete |
+| CORE-06 | Phase 2 | Complete |
 | ENFORCE-01 | Phase 3 | Pending |
 | ENFORCE-02 | Phase 3 | Pending |
 | ENFORCE-03 | Phase 3 | Pending |
