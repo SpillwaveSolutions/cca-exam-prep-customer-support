@@ -78,8 +78,10 @@ def run_agent_loop(
         # Accumulate usage across all iterations
         usage.input_tokens += response.usage.input_tokens
         usage.output_tokens += response.usage.output_tokens
-        usage.cache_read_input_tokens += response.usage.cache_read_input_tokens or 0
-        usage.cache_creation_input_tokens += response.usage.cache_creation_input_tokens or 0
+        usage.cache_read_input_tokens += getattr(response.usage, "cache_read_input_tokens", 0) or 0
+        usage.cache_creation_input_tokens += (
+            getattr(response.usage, "cache_creation_input_tokens", 0) or 0
+        )
 
         # Append assistant turn to message history
         messages.append({"role": "assistant", "content": response.content})

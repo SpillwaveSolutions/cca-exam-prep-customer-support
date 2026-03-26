@@ -28,8 +28,33 @@ def dispatch(tool_name: str, input_dict: dict, services: ServiceContainer) -> st
 
     CCA Rule: Unknown tool names return a structured JSON error, never raise exceptions.
     Silent failures (swallowed exceptions) violate the CCA silent-failure-prevention rule.
+    Error responses use structured error context per CCA rules: status, error_type, source,
+    retry_eligible, fallback_available, partial_data.
     """
     handler = DISPATCH.get(tool_name)
     if handler is None:
-        return json.dumps({"error": f"Unknown tool: {tool_name}"})
-    return handler(input_dict, services)
+        return json.dumps(
+            {
+                "status": "error",
+                "error_type": "unknown_tool",
+                "source": "dispatch",
+                "message": f"Unknown tool: {tool_name}",
+                "retry_eligible": False,
+                "fallback_available": False,
+                "partial_data": None,
+            }
+        )
+    try:
+        return handler(input_dict, services)
+    except (KeyError, TypeError, ValueError) as exc:
+        return json.dumps(
+            {
+                "status": "error",
+                "error_type": "invalid_input",
+                "source": tool_name,
+                "message": str(exc),
+                "retry_eligible": True,
+                "fallback_available": False,
+                "partial_data": None,
+            }
+        )

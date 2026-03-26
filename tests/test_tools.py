@@ -113,10 +113,34 @@ class TestDispatchRegistry:
         parsed = json.loads(result)
         assert parsed["status"] == "logged"
 
-    def test_dispatch_unknown_tool(self, services):
+    def test_dispatch_unknown_tool_structured_error(self, services):
+        """CCA Rule: Error responses use structured error context."""
         result = dispatch("nonexistent_tool", {}, services)
         parsed = json.loads(result)
-        assert "error" in parsed
+        assert parsed["status"] == "error"
+        assert parsed["error_type"] == "unknown_tool"
+        assert parsed["source"] == "dispatch"
+        assert parsed["retry_eligible"] is False
+        assert parsed["fallback_available"] is False
+        assert parsed["partial_data"] is None
+
+    def test_dispatch_malformed_input_returns_structured_error(self, services):
+        """CCA Rule: Malformed input returns structured error, never raises."""
+        # escalate_to_human requires many fields — passing empty dict triggers KeyError
+        result = dispatch("escalate_to_human", {}, services)
+        parsed = json.loads(result)
+        assert parsed["status"] == "error"
+        assert parsed["error_type"] == "invalid_input"
+        assert parsed["source"] == "escalate_to_human"
+        assert parsed["retry_eligible"] is True
+
+    def test_dispatch_malformed_log_interaction(self, services):
+        """log_interaction with missing fields returns structured error."""
+        result = dispatch("log_interaction", {}, services)
+        parsed = json.loads(result)
+        assert parsed["status"] == "error"
+        assert parsed["error_type"] == "invalid_input"
+        assert parsed["source"] == "log_interaction"
 
     def test_all_handlers_return_json_strings(self, services):
         """Every handler must return a valid JSON string (CCA rule)."""
