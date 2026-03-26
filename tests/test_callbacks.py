@@ -409,3 +409,109 @@ class TestBuildCallbacks:
         cb_func = callbacks["log_interaction"]
         result = cb_func("log_interaction", {}, result_dict, context, fresh_services)
         assert result.action == "replace_result"
+
+
+# ---------------------------------------------------------------------------
+# Task 2: Dispatch integration and veto guarantee tests
+# ---------------------------------------------------------------------------
+
+
+class TestVetoGuarantee:
+    """Veto guarantee: blocked refund must NOT touch FinancialSystem."""
+
+    def test_veto_guarantee_financial_system_untouched(self, fresh_services):
+        """Fresh ServiceContainer + C003 $600 -> FinancialSystem.get_processed() stays empty."""
+        from customer_service.tools.handlers import dispatch
+
+        callbacks = build_callbacks()
+        # requires_review is pre-set because $600 > $500 (normally set by check_policy_callback)
+        context: dict = {"user_message": "Please refund my order", "requires_review": True}
+
+        result = dispatch(
+            "process_refund",
+            {"customer_id": "C003", "order_id": "ORD-003", "amount": 600.0, "reason": "Test"},
+            fresh_services,
+            context=context,
+            callbacks=callbacks,
+        )
+
+        parsed = json.loads(result)
+        assert parsed["status"] == "blocked"
+        assert parsed["action_required"] == "escalate_to_human"
+        # VETO GUARANTEE: FinancialSystem must be untouched
+        assert fresh_services.financial_system.get_processed() == []
+
+    def test_allow_commits_to_financial_system(self, fresh_services):
+        """C001 $50 refund, no escalation flags -> FinancialSystem records the refund."""
+        from customer_service.tools.handlers import dispatch
+
+        callbacks = build_callbacks()
+        context: dict = {"user_message": "Please refund my small order"}
+
+        result = dispatch(
+            "process_refund",
+            {"customer_id": "C001", "order_id": "ORD-001", "amount": 50.0, "reason": "Test"},
+            fresh_services,
+            context=context,
+            callbacks=callbacks,
+        )
+
+        parsed = json.loads(result)
+        assert parsed["status"] == "approved"
+        # ALLOW: FinancialSystem must have one record
+        assert len(fresh_services.financial_system.get_processed()) == 1
+
+    def test_dispatch_backward_compatible(self, fresh_services):
+        """dispatch() without context/callbacks still returns valid JSON."""
+        from customer_service.tools.handlers import dispatch
+
+        result = dispatch("lookup_customer", {"customer_id": "C001"}, fresh_services)
+        parsed = json.loads(result)
+        assert parsed["name"] == "Alice Johnson"
+
+    def test_compliance_redaction_in_dispatch(self, fresh_services):
+        """dispatch log_interaction with callbacks redacts card number in result.
+
+        log_interaction returns {"status": "logged", "entry": {"details": "..."}},
+        so we check entry.details for the redacted value.
+        """
+        from customer_service.tools.handlers import dispatch
+
+        callbacks = build_callbacks()
+        context: dict = {"user_message": "help"}
+
+        result = dispatch(
+            "log_interaction",
+            {
+                "customer_id": "C001",
+                "action": "payment",
+                "details": "Processed card 4111-1111-1111-1111",
+            },
+            fresh_services,
+            context=context,
+            callbacks=callbacks,
+        )
+
+        parsed = json.loads(result)
+        entry_details = parsed.get("entry", {}).get("details", "")
+        assert "4111-1111-1111-1111" not in entry_details
+        assert "****-****-****-1111" in entry_details
+
+    def test_veto_guarantee_vip_customer(self, fresh_services):
+        """VIP customer refund -> blocked, FinancialSystem untouched."""
+        from customer_service.tools.handlers import dispatch
+
+        callbacks = build_callbacks()
+        context: dict = {"user_message": "I need a refund", "vip": True}
+
+        result = dispatch(
+            "process_refund",
+            {"customer_id": "C002", "order_id": "ORD-002", "amount": 100.0, "reason": "Test"},
+            fresh_services,
+            context=context,
+            callbacks=callbacks,
+        )
+
+        parsed = json.loads(result)
+        assert parsed["status"] == "blocked"
+        assert fresh_services.financial_system.get_processed() == []

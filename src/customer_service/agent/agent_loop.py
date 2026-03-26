@@ -44,6 +44,8 @@ def run_agent_loop(
     model: str = "claude-sonnet-4-6",
     max_tokens: int = 4096,
     max_iterations: int = 10,
+    tools: list[dict] | None = None,
+    callbacks: dict | None = None,
 ) -> AgentResult:
     """Run the agentic tool-use loop until end_turn or max_iterations.
 
@@ -58,10 +60,17 @@ def run_agent_loop(
         model: Claude model identifier
         max_tokens: Max output tokens per API call
         max_iterations: Safety limit to prevent infinite loops
+        tools: Tool schemas to pass to the API. Defaults to TOOLS (5 correct tools).
+            Anti-pattern modules may pass SWISS_ARMY_TOOLS (15 tools) here.
+        callbacks: Per-tool PostToolUse callback registry from build_callbacks().
+            CCA Principle #1: programmatic enforcement beats prompt-based guidance.
 
     Returns:
         AgentResult with stop_reason, all messages, tool_calls, final_text, and usage
     """
+    active_tools = tools if tools is not None else TOOLS
+    # Build context dict for callback enrichment (user_message + escalation flags)
+    context: dict = {"user_message": user_message}
     messages: list[dict] = [{"role": "user", "content": user_message}]
     tool_calls: list[dict] = []
     usage = UsageSummary()
@@ -71,7 +80,7 @@ def run_agent_loop(
             model=model,
             max_tokens=max_tokens,
             system=system_prompt,
-            tools=TOOLS,
+            tools=active_tools,
             messages=messages,
         )
 
@@ -109,7 +118,9 @@ def run_agent_loop(
                 continue
 
             tool_calls.append({"name": block.name, "input": block.input, "id": block.id})
-            result_content = dispatch(block.name, block.input, services)
+            result_content = dispatch(
+                block.name, block.input, services, context=context, callbacks=callbacks
+            )
             tool_results.append(
                 {
                     "type": "tool_result",
