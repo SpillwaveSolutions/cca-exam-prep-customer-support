@@ -5,7 +5,7 @@
 ### Setup (SETUP)
 
 - **SETUP-01**: Project skeleton with `src/` layout, pyproject.toml, Poetry config, `.env.example`, `.gitignore`
-- **SETUP-02**: Notebook template with correct-before-anti-pattern ordering, `print_usage` helper, visual differentiation
+- **SETUP-02**: Notebook template with anti-pattern-first ordering (Setup > Anti-Pattern > Correct > Compare), `print_usage` helper, visual differentiation (red/green HTML boxes)
 - **SETUP-03**: Pre-commit hooks (nbstripout + ruff) for notebook and code hygiene
 
 ### Models and Services (CORE)

@@ -10,8 +10,9 @@ class CustomerDatabase:
     """
 
     def __init__(self, customers: dict[str, CustomerProfile]) -> None:
-        self._customers = customers
+        self._customers = {k: v.model_copy() for k, v in customers.items()}
 
     def get_customer(self, customer_id: str) -> CustomerProfile | None:
-        """Look up a customer by ID. Returns None if not found."""
-        return self._customers.get(customer_id)
+        """Look up a customer by ID. Returns a copy to prevent cross-scenario contamination."""
+        profile = self._customers.get(customer_id)
+        return profile.model_copy() if profile is not None else None
