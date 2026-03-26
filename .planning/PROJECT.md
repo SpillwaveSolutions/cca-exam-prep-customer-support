@@ -19,10 +19,17 @@ Students can run code that demonstrates every CCA Customer Support anti-pattern 
 - [x] print_usage and compare_results helpers for token accounting — Validated in Phase 1
 - [x] Taskfile.yml for automated project setup and verification — Validated in Phase 1
 
+- [x] 6 Pydantic models, 5 deterministic services, frozen ServiceContainer — Validated in Phase 2
+- [x] 5 focused tool schemas with negative-bound descriptions from model_json_schema() — Validated in Phase 2
+- [x] Dict-based dispatch registry routing tool_use blocks to handlers — Validated in Phase 2
+- [x] stop_reason-controlled agentic loop with UsageSummary for print_usage — Validated in Phase 2
+- [x] Seed data: 6 customers (C001-C006) + 6 scenarios targeting CCA escalation rules — Validated in Phase 2
+- [x] CCA compliance: $500 threshold, JSON string returns, negative bounds, no content-type checking — Validated in Phase 2
+
 ### Active
 
 - [ ] Notebooks (00-07) covering all 6 CCA patterns with anti-pattern vs correct pattern contrast
-- [ ] Production Python package with Pydantic models, simulated services, Claude API tools, callbacks
+- [ ] Production Python package with callbacks and enforcement layer
 - [ ] Deterministic escalation logic via PostToolUse callbacks (amount > $500, account closure, VIP, legal)
 - [ ] Programmatic compliance enforcement in application layer, not prompt instructions
 - [ ] 5 focused tools per agent (lookup_customer, check_policy, process_refund, escalate_to_human, log_interaction)
@@ -73,4 +80,4 @@ Rick has completed the Claude API course on Anthropic Academy and works in Pytho
 | claude -p --bare for CI/CD | Demonstrates CCA Article 2 best practices in the project itself | — Pending |
 
 ---
-*Last updated: 2026-03-25 after Phase 1 completion*
+*Last updated: 2026-03-26 after Phase 2 completion*
