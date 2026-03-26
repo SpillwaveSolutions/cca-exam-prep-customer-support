@@ -33,8 +33,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 2 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Package skeleton, __init__.py files, __main__.py, pre-commit hooks
-- [ ] 01-02-PLAN.md — Notebook helpers (print_usage, compare_results) and setup notebook (00)
+- [x] 01-01-PLAN.md — Package skeleton, __init__.py files, __main__.py, pre-commit hooks
+- [x] 01-02-PLAN.md — Notebook helpers (print_usage, compare_results) and setup notebook (00)
 
 ### Phase 2: Models, Services, and Core Loop
 **Goal**: The 5-tool customer support agent can process a customer message through a complete agentic loop using simulated services
@@ -46,11 +46,11 @@ Plans:
   3. The agentic loop processes a customer message, dispatches tool calls, and terminates on `stop_reason == "end_turn"` (not content-type checking)
   4. All 5 tool schemas are registered and the dispatch registry routes tool_use blocks to correct handlers
   5. Seed data includes customers and scenarios that trigger escalation thresholds ($600 refund, VIP customer, legal mention, account closure)
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 02-01: TBD
-- [ ] 02-02: TBD
+- [ ] 02-01-PLAN.md — Pydantic models, 5 simulated services, ServiceContainer, seed data (C001-C006), and scenarios
+- [ ] 02-02-PLAN.md — 5 tool schemas with negative bounds, dispatch registry, agentic loop, system prompt, package re-exports
 
 ### Phase 3: Callbacks, Enforcement, and First Notebooks
 **Goal**: Students can run notebooks 01-03 and observe how deterministic callbacks catch what prompt-only rules miss, and how 5 focused tools outperform 15
