@@ -86,12 +86,26 @@ def dispatch(
                 input_dict, services, ctx, callbacks["process_refund"]
             )
 
-        # Standard dispatch: run handler, optionally run callback
+        # Pre-handler callback for log_interaction: redact input BEFORE handler writes
+        # CCA Rule: PII must never reach the audit log — redact before write, not after
+        if tool_name == "log_interaction" and callbacks and "log_interaction" in callbacks:
+            cb = callbacks["log_interaction"]
+            # Pass input_dict as result_dict so callback can find "details" field
+            cb_result = cb(tool_name, input_dict, input_dict, ctx, services)
+            if cb_result.action == "replace_result" and cb_result.replacement is not None:
+                try:
+                    redacted = json.loads(cb_result.replacement)
+                    if "details" in redacted:
+                        input_dict = {**input_dict, "details": redacted["details"]}
+                except (json.JSONDecodeError, ValueError):
+                    pass
+
+        # Standard dispatch: run handler, optionally run post-handler callback
         result = handler(input_dict, services)
 
         if callbacks:
             cb = callbacks.get(tool_name)
-            if cb is not None:
+            if cb is not None and tool_name != "log_interaction":  # already handled above
                 try:
                     result_dict = json.loads(result)
                 except (json.JSONDecodeError, ValueError):

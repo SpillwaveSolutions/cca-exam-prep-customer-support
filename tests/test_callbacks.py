@@ -497,6 +497,38 @@ class TestVetoGuarantee:
         assert "4111-1111-1111-1111" not in entry_details
         assert "****-****-****-1111" in entry_details
 
+    def test_compliance_audit_log_never_has_raw_pii(self, fresh_services):
+        """THE CRITICAL TEST: PII must never reach AuditLog, not just returned JSON.
+
+        CCA Rule: Programmatic redaction happens BEFORE the write, not after.
+        This test catches the bug where dispatch runs the handler first (writing
+        raw PII to audit_log) and only then redacts the returned JSON.
+        """
+        from customer_service.tools.handlers import dispatch
+
+        callbacks = build_callbacks()
+        context: dict = {"user_message": "help"}
+
+        dispatch(
+            "log_interaction",
+            {
+                "customer_id": "C001",
+                "action": "payment",
+                "details": "Customer provided card 4111-1111-1111-1111 for refund",
+            },
+            fresh_services,
+            context=context,
+            callbacks=callbacks,
+        )
+
+        # Check the ACTUAL audit log, not the returned JSON
+        entries = fresh_services.audit_log.get_entries()
+        assert len(entries) == 1
+        assert "4111-1111-1111-1111" not in entries[0].details, (
+            "Raw PII leaked to audit log — redaction must happen BEFORE handler write"
+        )
+        assert "****-****-****-1111" in entries[0].details
+
     def test_veto_guarantee_vip_customer(self, fresh_services):
         """VIP customer refund -> blocked, FinancialSystem untouched."""
         from customer_service.tools.handlers import dispatch
