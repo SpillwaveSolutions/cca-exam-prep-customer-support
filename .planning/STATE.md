@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-stopped_at: Phase 2 context gathered with CCA rules
-last_updated: "2026-03-26T02:33:47.122Z"
+stopped_at: Completed 02-01-PLAN.md
+last_updated: "2026-03-26T05:08:45.229Z"
 progress:
   total_phases: 6
   completed_phases: 1
-  total_plans: 2
-  completed_plans: 2
+  total_plans: 4
+  completed_plans: 3
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-25)
 
 **Core value:** Students can run code that demonstrates every CCA Customer Support anti-pattern failure and its correct architectural fix
-**Current focus:** Phase 01 — project-foundation
+**Current focus:** Phase 02 — models-services-and-core-loop
 
 ## Current Position
 
-Phase: 01 (project-foundation) — EXECUTING
-Plan: 1 of 2
+Phase: 02 (models-services-and-core-loop) — EXECUTING
+Plan: 2 of 2
 
 ## Performance Metrics
 
@@ -48,6 +48,7 @@ Plan: 1 of 2
 *Updated after each plan completion*
 | Phase 01-project-foundation P01 | 2 | 2 tasks | 15 files |
 | Phase 01-project-foundation P02 | 5 | 2 tasks | 4 files |
+| Phase 02-models-services-and-core-loop P01 | 184 | 2 tasks | 13 files |
 
 ## Accumulated Context
 
@@ -64,6 +65,9 @@ Recent decisions affecting current work:
 - [Phase 01-project-foundation]: ruff types_or: [python, pyi, jupyter] required for notebook linting to include .ipynb files
 - [Phase 01-project-foundation]: Use (major, minor) tuple comparison instead of sys.version_info >= (3, 13) in notebooks to avoid ruff UP036 error under py313 minimum
 - [Phase 01-project-foundation]: Hardcoded cost rate constants in helpers.py (_PRICE_INPUT=3.00, etc.) for student visibility
+- [Phase 02-models-services-and-core-loop]: Used StrEnum instead of (str, Enum) for CustomerTier to comply with ruff UP042
+- [Phase 02-models-services-and-core-loop]: FinancialSystem.process_refund takes policy_approved bool — FinancialSystem trusts PolicyEngine, no re-evaluation
+- [Phase 02-models-services-and-core-loop]: requires_review is amount > 500 regardless of tier — VIP $4000 still triggers review
 
 ### Pending Todos
 
@@ -77,6 +81,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T02:33:47.120Z
-Stopped at: Phase 2 context gathered with CCA rules
-Resume file: .planning/phases/02-models-services-and-core-loop/02-CONTEXT.md
+Last session: 2026-03-26T05:08:45.227Z
+Stopped at: Completed 02-01-PLAN.md
+Resume file: None

@@ -81,9 +81,9 @@
 | SETUP-01 | Phase 1 | Complete |
 | SETUP-02 | Phase 1 | Complete |
 | SETUP-03 | Phase 1 | Complete |
-| CORE-01 | Phase 2 | Pending |
-| CORE-02 | Phase 2 | Pending |
-| CORE-03 | Phase 2 | Pending |
+| CORE-01 | Phase 2 | Complete |
+| CORE-02 | Phase 2 | Complete |
+| CORE-03 | Phase 2 | Complete |
 | CORE-04 | Phase 2 | Pending |
 | CORE-05 | Phase 2 | Pending |
 | CORE-06 | Phase 2 | Pending |
@@ -111,7 +111,7 @@
 | CICD-02 | Phase 6 | Pending |
 | CICD-03 | Phase 6 | Pending |
 | STUDENT-01 | Phase 5 | Pending |
-| STUDENT-02 | Phase 2 | Pending |
+| STUDENT-02 | Phase 2 | Complete |
 
 ---
 *Created: 2026-03-25*
