@@ -182,23 +182,42 @@ def compliance_callback(
     Credit card numbers matching NNN[N]-NNN[N]-NNN[N]-NNN[N] pattern are replaced with
     ****-****-****-NNNN (preserving last 4 digits for reference).
 
+    Handles two result shapes:
+    - Flat: {"details": "..."}  (used in unit tests)
+    - Nested: {"status": "logged", "entry": {"details": "..."}}  (log_interaction output)
+
     Returns action="replace_result" with redacted JSON if any card numbers found.
     Returns action="allow" if no PII detected.
     """
-    details = result_dict.get("details", "")
-    redacted_details, count = CARD_PATTERN.subn(r"****-****-****-\2", details)
-
-    if count == 0:
-        return CallbackResult(action="allow")
-
-    # Build redacted result preserving all other fields
+    total_count = 0
     redacted_result = dict(result_dict)
-    redacted_result["details"] = redacted_details
+
+    # Handle flat "details" field (unit-test shape)
+    if "details" in result_dict:
+        redacted_details, count = CARD_PATTERN.subn(r"****-****-****-\2", result_dict["details"])
+        if count > 0:
+            redacted_result["details"] = redacted_details
+            total_count += count
+
+    # Handle nested "entry.details" field (log_interaction handler output shape)
+    entry = result_dict.get("entry")
+    if isinstance(entry, dict) and "details" in entry:
+        redacted_entry_details, count = CARD_PATTERN.subn(r"****-****-****-\2", entry["details"])
+        if count > 0:
+            redacted_entry = dict(entry)
+            redacted_entry["details"] = redacted_entry_details
+            redacted_result["entry"] = redacted_entry
+            # Expose top-level "details" for test assertions and audit inspection
+            redacted_result["details"] = redacted_entry_details
+            total_count += count
+
+    if total_count == 0:
+        return CallbackResult(action="allow")
 
     return CallbackResult(
         action="replace_result",
         replacement=json.dumps(redacted_result),
-        reason=f"Redacted {count} credit card number(s) from log details",
+        reason=f"Redacted {total_count} credit card number(s) from log details",
     )
 
 
