@@ -184,3 +184,95 @@ def test_notebook_03_imports_swiss_army_agent() -> None:
     assert "run_swiss_army_agent" in code, (
         "NB03 must import and use run_swiss_army_agent for anti-pattern section"
     )
+
+
+# ---------------------------------------------------------------------------
+# NB04: Cost Optimization — existence, structure, import, CCA pattern
+# ---------------------------------------------------------------------------
+
+
+def test_notebook_04_exists() -> None:
+    """notebooks/04_cost_optimization.ipynb must exist."""
+    assert (NOTEBOOKS_DIR / "04_cost_optimization.ipynb").exists()
+
+
+def test_notebook_04_sections() -> None:
+    """NB04 must contain Anti-Pattern, Correct Pattern, Compare, and CCA Exam Tip."""
+    nb = _load_notebook("04_cost_optimization.ipynb")
+    md = _all_markdown(nb)
+
+    assert "Anti-Pattern" in md, "NB04 missing Anti-Pattern section"
+    assert "Correct Pattern" in md, "NB04 missing Correct Pattern section"
+    assert "Compare" in md, "NB04 missing Compare section"
+    assert "CCA Exam Tip" in md, "NB04 missing CCA Exam Tip"
+
+
+def test_notebook_04_imports() -> None:
+    """NB04 must import get_system_prompt_with_caching and POLICY_DOCUMENT."""
+    nb = _load_notebook("04_cost_optimization.ipynb")
+    code = _all_code(nb)
+
+    assert "get_system_prompt_with_caching" in code, (
+        "NB04 must import get_system_prompt_with_caching for caching demo"
+    )
+    assert "POLICY_DOCUMENT" in code, "NB04 must import POLICY_DOCUMENT to show token count"
+
+
+def test_notebook_04_cca_pattern() -> None:
+    """NB04 must reference cache_control or cache_read (caching-specific)."""
+    nb = _load_notebook("04_cost_optimization.ipynb")
+    code = _all_code(nb)
+
+    assert "cache_control" in code or "cache_read" in code, (
+        "NB04 must reference cache_control or cache_read_input_tokens"
+    )
+
+
+def test_notebook_04_batch_api_mentioned() -> None:
+    """NB04 must mention Batch API anti-pattern."""
+    nb = _load_notebook("04_cost_optimization.ipynb")
+    md = _all_markdown(nb)
+
+    assert "Batch API" in md, "NB04 must explain Batch API anti-pattern"
+
+
+# ---------------------------------------------------------------------------
+# NB05: Context Management — existence, structure, import, CCA pattern
+# ---------------------------------------------------------------------------
+
+
+def test_notebook_05_exists() -> None:
+    """notebooks/05_context_management.ipynb must exist."""
+    assert (NOTEBOOKS_DIR / "05_context_management.ipynb").exists()
+
+
+def test_notebook_05_sections() -> None:
+    """NB05 must contain Anti-Pattern, Correct Pattern, Compare, and CCA Exam Tip."""
+    nb = _load_notebook("05_context_management.ipynb")
+    md = _all_markdown(nb)
+
+    assert "Anti-Pattern" in md, "NB05 missing Anti-Pattern section"
+    assert "Correct Pattern" in md, "NB05 missing Correct Pattern section"
+    assert "Compare" in md, "NB05 missing Compare section"
+    assert "CCA Exam Tip" in md, "NB05 missing CCA Exam Tip"
+
+
+def test_notebook_05_imports() -> None:
+    """NB05 must import ContextSummary and RawTranscriptContext."""
+    nb = _load_notebook("05_context_management.ipynb")
+    code = _all_code(nb)
+
+    assert "ContextSummary" in code, "NB05 must import ContextSummary for correct pattern section"
+    assert "RawTranscriptContext" in code, (
+        "NB05 must import RawTranscriptContext for anti-pattern section"
+    )
+
+
+def test_notebook_05_cca_pattern() -> None:
+    """NB05 must reference token_estimate (context management specific)."""
+    nb = _load_notebook("05_context_management.ipynb")
+    code = _all_code(nb)
+
+    assert "token_estimate" in code, (
+        "NB05 must reference token_estimate to demonstrate O(n) vs O(1) growth"
+    )
