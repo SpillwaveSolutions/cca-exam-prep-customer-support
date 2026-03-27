@@ -40,7 +40,7 @@ def run_agent_loop(
     client: object,
     services: ServiceContainer,
     user_message: str,
-    system_prompt: str,
+    system_prompt: str | list[dict],
     model: str = "claude-sonnet-4-6",
     max_tokens: int = 4096,
     max_iterations: int = 10,
@@ -56,7 +56,11 @@ def run_agent_loop(
         client: Anthropic API client (or mock in tests)
         services: Injected ServiceContainer with all 5 services
         user_message: Initial customer message
-        system_prompt: System context (context only, rules enforced in callbacks)
+        system_prompt: System context (context only, rules enforced in callbacks).
+            Accepts either a plain string OR a list of TextBlockParam dicts for
+            prompt caching (OPTIM-01). Pass get_system_prompt_with_caching() to
+            enable caching of the POLICY_DOCUMENT block. The Anthropic SDK's
+            client.messages.create(system=...) natively accepts both forms.
         model: Claude model identifier
         max_tokens: Max output tokens per API call
         max_iterations: Safety limit to prevent infinite loops
