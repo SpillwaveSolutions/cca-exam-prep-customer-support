@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 04-01-PLAN.md
-last_updated: "2026-03-27T19:58:51.750Z"
+stopped_at: Completed 04-02-PLAN.md
+last_updated: "2026-03-27T20:06:40.228Z"
 progress:
   total_phases: 6
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 9
-  completed_plans: 8
+  completed_plans: 9
 ---
 
 # Project State
@@ -53,6 +53,7 @@ Plan: 1 of 2
 | Phase 03-callbacks-enforcement-and-first-notebooks P01 | 314 | 2 tasks | 6 files |
 | Phase 03-callbacks-enforcement-and-first-notebooks P03 | 292 | 2 tasks | 4 files |
 | Phase 04-caching-and-context-notebooks P01 | 6 | 2 tasks | 9 files |
+| Phase 04-caching-and-context-notebooks P02 | 5 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -84,6 +85,8 @@ Recent decisions affecting current work:
 - [Phase 04-caching-and-context-notebooks]: TOKEN_BUDGET=300 chars (~75 tokens); compaction fires around update 7-8 keeping estimate well under budget
 - [Phase 04-caching-and-context-notebooks]: tools_called internal list never compacted; to_system_context() uses tools_called[-5:] for display only
 - [Phase 04-caching-and-context-notebooks]: agent_loop system_prompt type widened to str | list[dict] — no logic change, SDK handles both natively
+- [Phase 04-caching-and-context-notebooks]: _UsageWrapper inline in NB04 code cells — bridges AgentResult.usage to print_usage without external dependency
+- [Phase 04-caching-and-context-notebooks]: NB05 per-turn cell pairs for pedagogical visibility of O(n) transcript growth; birthday fact in pending_actions survives compaction
 
 ### Pending Todos
 
@@ -97,6 +100,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-27T19:58:51.747Z
-Stopped at: Completed 04-01-PLAN.md
+Last session: 2026-03-27T20:06:40.226Z
+Stopped at: Completed 04-02-PLAN.md
 Resume file: None
