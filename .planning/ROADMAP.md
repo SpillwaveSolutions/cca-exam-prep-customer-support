@@ -125,7 +125,7 @@ Note: Phases 3 and 4 are architecturally independent (both depend on Phase 2). T
 | 1. Project Foundation | 2/2 | Complete   | 2026-03-25 |
 | 2. Models, Services, and Core Loop | 2/2 | Complete   | 2026-03-26 |
 | 3. Callbacks, Enforcement, and First Notebooks | 1/3 | In Progress|  |
-| 4. Caching and Context Notebooks | 0/2 | Not started | - |
+| 4. Caching and Context Notebooks | 1/2 | In Progress|  |
 | 5. Handoffs, Integration, and Student Polish | 0/2 | Not started | - |
 | 6. Testing and CI/CD | 0/2 | Not started | - |
 

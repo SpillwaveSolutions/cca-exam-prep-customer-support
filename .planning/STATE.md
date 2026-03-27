@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-stopped_at: Phase 4 context gathered
-last_updated: "2026-03-26T21:49:16.891Z"
+stopped_at: Completed 04-01-PLAN.md
+last_updated: "2026-03-27T19:58:51.750Z"
 progress:
   total_phases: 6
   completed_phases: 3
-  total_plans: 7
-  completed_plans: 7
+  total_plans: 9
+  completed_plans: 8
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-25)
 
 **Core value:** Students can run code that demonstrates every CCA Customer Support anti-pattern failure and its correct architectural fix
-**Current focus:** Phase 03 — callbacks-enforcement-and-first-notebooks
+**Current focus:** Phase 04 — caching-and-context-notebooks
 
 ## Current Position
 
-Phase: 03 (callbacks-enforcement-and-first-notebooks) — EXECUTING
-Plan: 2 of 3
+Phase: 04 (caching-and-context-notebooks) — EXECUTING
+Plan: 1 of 2
 
 ## Performance Metrics
 
@@ -52,6 +52,7 @@ Plan: 2 of 3
 | Phase 02-models-services-and-core-loop P02 | 232 | 2 tasks | 11 files |
 | Phase 03-callbacks-enforcement-and-first-notebooks P01 | 314 | 2 tasks | 6 files |
 | Phase 03-callbacks-enforcement-and-first-notebooks P03 | 292 | 2 tasks | 4 files |
+| Phase 04-caching-and-context-notebooks P01 | 6 | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -79,6 +80,10 @@ Recent decisions affecting current work:
 - [Phase 03-callbacks-enforcement-and-first-notebooks]: run_agent_loop extended with optional tools parameter (default None = TOOLS); Swiss Army anti-pattern passes SWISS_ARMY_TOOLS
 - [Phase 03-callbacks-enforcement-and-first-notebooks]: Notebook imports: helpers (local first-party) before customer_service (project) to satisfy isort I001
 - [Phase 03-callbacks-enforcement-and-first-notebooks]: make_services() helper in notebooks for explicit ServiceContainer construction (frozen dataclass, no defaults)
+- [Phase 04-caching-and-context-notebooks]: POLICY_DOCUMENT sized to 4079 tokens (far above 2048-token minimum) using real policy content in 7 sections
+- [Phase 04-caching-and-context-notebooks]: TOKEN_BUDGET=300 chars (~75 tokens); compaction fires around update 7-8 keeping estimate well under budget
+- [Phase 04-caching-and-context-notebooks]: tools_called internal list never compacted; to_system_context() uses tools_called[-5:] for display only
+- [Phase 04-caching-and-context-notebooks]: agent_loop system_prompt type widened to str | list[dict] — no logic change, SDK handles both natively
 
 ### Pending Todos
 
@@ -92,6 +97,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T21:49:16.889Z
-Stopped at: Phase 4 context gathered
-Resume file: .planning/phases/04-caching-and-context-notebooks/04-CONTEXT.md
+Last session: 2026-03-27T19:58:51.747Z
+Stopped at: Completed 04-01-PLAN.md
+Resume file: None
