@@ -78,11 +78,11 @@ Plans:
   2. The `cache_control` marker is placed on static policy context (not dynamic user messages) -- students can see this in the system message structure
   3. Context management notebook shows structured JSON summary staying under a token budget while raw transcript grows unbounded over multi-turn conversation
   4. Notebooks 04 (cost optimization) and 05 (context management) each run end-to-end with visible before/after comparison
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 04-01: TBD
-- [ ] 04-02: TBD
+- [ ] 04-01-PLAN.md — POLICY_DOCUMENT with caching, ContextSummary class, anti-patterns (raw_transcript, batch_api_live), behavioral tests
+- [ ] 04-02-PLAN.md — Notebooks 04 (cost optimization) and 05 (context management) with smoke tests
 
 ### Phase 5: Handoffs, Integration, and Student Polish
 **Goal**: Students can see structured escalation handoffs in action, run the full integration notebook combining all 6 patterns, and find TODO placeholders for hands-on learning
