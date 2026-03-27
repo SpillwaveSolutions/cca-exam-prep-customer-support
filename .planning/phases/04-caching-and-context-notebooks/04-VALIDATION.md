@@ -28,8 +28,8 @@ created: 2026-03-27
 |---------|------|------|-------------|-----------|-------------------|-------------|--------|
 | 04-01-01 | 01 | 1 | OPTIM-01 | unit | `poetry run pytest tests/test_caching.py -x` | ❌ W0 | ⬜ |
 | 04-01-02 | 01 | 1 | OPTIM-02 | unit | `poetry run pytest tests/test_context_manager.py -x` | ❌ W0 | ⬜ |
-| 04-02-01 | 02 | 2 | ANTI-04 | unit | `poetry run pytest tests/test_anti_patterns.py -x` | ❌ W0 | ⬜ |
-| 04-03-01 | 03 | 3 | NB-05, NB-06 | smoke | `poetry run pytest tests/test_notebooks.py -x` | ❌ W0 | ⬜ |
+| 04-01-03 | 01 | 1 | ANTI-04 | unit | `poetry run pytest tests/test_caching.py -x` | ❌ W0 | ⬜ |
+| 04-02-01 | 02 | 2 | NB-05, NB-06 | smoke | `poetry run pytest tests/test_notebooks.py -x` | ❌ W0 | ⬜ |
 
 ---
 
