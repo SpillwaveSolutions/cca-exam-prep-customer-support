@@ -4,10 +4,12 @@ CCA Rules enforced here:
 - Terminate on stop_reason, NEVER content-type checking (CCA agentic loop rule)
 - stop_reason == 'end_turn' -> agent is done
 - stop_reason == 'tool_use' -> dispatch tools, continue loop
+- stop_reason == 'escalated' -> tool_choice forced escalate_to_human completed
 - Accumulate usage tokens across all iterations
 - Safety limit: max_iterations guard returns 'max_iterations' stop_reason
 """
 
+import json
 from dataclasses import dataclass, field
 
 from customer_service.services.container import ServiceContainer
@@ -27,13 +29,45 @@ class UsageSummary:
 
 @dataclass
 class AgentResult:
-    """Result returned by run_agent_loop."""
+    """Result returned by run_agent_loop.
+
+    stop_reason values:
+        'end_turn'       -> Claude finished normally
+        'tool_use'       -> loop hit max_iterations while dispatching tools (should not occur)
+        'max_iterations' -> safety limit exceeded
+        'escalated'      -> tool_choice forced escalate_to_human completed successfully
+    """
 
     stop_reason: str
     messages: list = field(default_factory=list)
     tool_calls: list[dict] = field(default_factory=list)
     final_text: str = ""
     usage: UsageSummary = field(default_factory=UsageSummary)
+
+
+def _has_escalation_required(tool_results: list[dict]) -> bool:
+    """Return True if any tool_result contains action_required == 'escalate_to_human'.
+
+    CCA Rule: Detect blocked refund deterministically from structured callback output.
+    Parses each tool_result's 'content' field as JSON and checks action_required.
+
+    Args:
+        tool_results: List of tool_result dicts from the agent loop iteration.
+
+    Returns:
+        True if any result has action_required == 'escalate_to_human', False otherwise.
+    """
+    for tr in tool_results:
+        content = tr.get("content", "")
+        if not isinstance(content, str):
+            continue
+        try:
+            parsed = json.loads(content)
+        except (json.JSONDecodeError, ValueError):
+            continue
+        if parsed.get("action_required") == "escalate_to_human":
+            return True
+    return False
 
 
 def run_agent_loop(
@@ -131,6 +165,63 @@ def run_agent_loop(
                     "tool_use_id": block.id,
                     "content": result_content,
                 }
+            )
+
+        # HANDOFF-01: Detect blocked refund — force tool_choice escalation immediately
+        if _has_escalation_required(tool_results):
+            # Append tool_results as user turn so context is complete
+            messages.append({"role": "user", "content": tool_results})
+
+            # Force escalate_to_human via tool_choice
+            # tool_choice may invalidate prompt cache — acceptable for one-time escalation call
+            forced_response = client.messages.create(
+                model=model,
+                max_tokens=max_tokens,
+                system=system_prompt,
+                tools=active_tools,
+                messages=messages,
+                tool_choice={"type": "tool", "name": "escalate_to_human"},
+            )
+
+            # Accumulate usage from forced call
+            usage.input_tokens += forced_response.usage.input_tokens
+            usage.output_tokens += forced_response.usage.output_tokens
+            usage.cache_read_input_tokens += (
+                getattr(forced_response.usage, "cache_read_input_tokens", 0) or 0
+            )
+            usage.cache_creation_input_tokens += (
+                getattr(forced_response.usage, "cache_creation_input_tokens", 0) or 0
+            )
+
+            # Append forced assistant turn
+            messages.append({"role": "assistant", "content": forced_response.content})
+
+            # Dispatch all tool_use blocks from forced response (same pattern as main loop)
+            escalation_results = []
+            for block in forced_response.content:
+                if not (hasattr(block, "type") and block.type == "tool_use"):
+                    continue
+                tool_calls.append({"name": block.name, "input": block.input, "id": block.id})
+                result_content = dispatch(
+                    block.name, block.input, services, context=context, callbacks=callbacks
+                )
+                escalation_results.append(
+                    {
+                        "type": "tool_result",
+                        "tool_use_id": block.id,
+                        "content": result_content,
+                    }
+                )
+
+            # Append escalation tool_results as user turn
+            messages.append({"role": "user", "content": escalation_results})
+
+            return AgentResult(
+                stop_reason="escalated",
+                messages=messages,
+                tool_calls=tool_calls,
+                final_text="",
+                usage=usage,
             )
 
         # CCA PITFALL: Send ONLY tool_result blocks — no text alongside them
