@@ -105,12 +105,12 @@
 | NB-04 | Phase 3 | Complete |
 | NB-05 | Phase 4 | Complete |
 | NB-06 | Phase 4 | Complete |
-| NB-07 | Phase 5 | Pending |
-| NB-08 | Phase 5 | Pending |
+| NB-07 | Phase 5 | Complete |
+| NB-08 | Phase 5 | Complete |
 | CICD-01 | Phase 6 | Pending |
 | CICD-02 | Phase 6 | Pending |
 | CICD-03 | Phase 6 | Pending |
-| STUDENT-01 | Phase 5 | Pending |
+| STUDENT-01 | Phase 5 | Complete |
 | STUDENT-02 | Phase 2 | Complete |
 
 ---

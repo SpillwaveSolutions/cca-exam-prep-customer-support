@@ -96,8 +96,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 05-01-PLAN.md — tool_choice forced escalation, coordinator-subagent pattern, raw_handoff anti-pattern, behavior-first tests
-- [ ] 05-02-PLAN.md — Notebooks 06 (handoffs) and 07 (integration capstone), student TODO placeholders, notebook smoke tests
+- [x] 05-01-PLAN.md — tool_choice forced escalation, coordinator-subagent pattern, raw_handoff anti-pattern, behavior-first tests
+- [x] 05-02-PLAN.md — Notebooks 06 (handoffs) and 07 (integration capstone), student TODO placeholders, notebook smoke tests
 
 ### Phase 6: Testing and CI/CD
 **Goal**: The project has automated test coverage and CI/CD that itself demonstrates CCA best practices for code generation with Claude
@@ -126,7 +126,7 @@ Note: Phases 3 and 4 are architecturally independent (both depend on Phase 2). T
 | 2. Models, Services, and Core Loop | 2/2 | Complete   | 2026-03-26 |
 | 3. Callbacks, Enforcement, and First Notebooks | 1/3 | In Progress|  |
 | 4. Caching and Context Notebooks | 2/2 | Complete   | 2026-03-27 |
-| 5. Handoffs, Integration, and Student Polish | 1/2 | In Progress|  |
+| 5. Handoffs, Integration, and Student Polish | 2/2 | Complete   | 2026-03-27 |
 | 6. Testing and CI/CD | 0/2 | Not started | - |
 
 ---

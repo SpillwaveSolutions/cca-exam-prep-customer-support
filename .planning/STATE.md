@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 05-01-PLAN.md
-last_updated: "2026-03-28T04:05:51.076Z"
+stopped_at: Completed 05-02-PLAN.md
+last_updated: "2026-03-27T00:00:00.000Z"
 progress:
   total_phases: 6
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 11
-  completed_plans: 10
+  completed_plans: 11
 ---
 
 # Project State
@@ -23,8 +23,8 @@ See: .planning/PROJECT.md (updated 2026-03-25)
 
 ## Current Position
 
-Phase: 05 (handoffs-integration-and-student-polish) — EXECUTING
-Plan: 1 of 2
+Phase: 05 (handoffs-integration-and-student-polish) — COMPLETE
+Plan: 2 of 2 — COMPLETE
 
 ## Performance Metrics
 
@@ -55,6 +55,7 @@ Plan: 1 of 2
 | Phase 04-caching-and-context-notebooks P01 | 6 | 2 tasks | 9 files |
 | Phase 04-caching-and-context-notebooks P02 | 5 | 2 tasks | 3 files |
 | Phase 05-handoffs-integration-and-student-polish P01 | 35 | 2 tasks | 7 files |
+| Phase 05-handoffs-integration-and-student-polish P02 | 20 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -90,6 +91,9 @@ Recent decisions affecting current work:
 - [Phase 04-caching-and-context-notebooks]: NB05 per-turn cell pairs for pedagogical visibility of O(n) transcript growth; birthday fact in pending_actions survives compaction
 - [Phase 05-handoffs-integration-and-student-polish]: tool_choice forced escalation: _has_escalation_required detects blocked refunds; second API call with tool_choice=escalate_to_human; stop_reason='escalated' overrides forced response stop_reason
 - [Phase 05-handoffs-integration-and-student-polish]: coordinator isolation: subagent receives only explicit context string (Customer ID, tier, task, details) — never coordinator messages list or system prompt
+- [Phase 05-handoffs-integration-and-student-polish]: NB06 reuses single agent loop run for both anti-pattern and correct pattern sections — avoids double API call, cleaner pedagogy
+- [Phase 05-handoffs-integration-and-student-polish]: NB07 uses shared services/result across all 6 pattern sections — one scenario exercises all patterns in order
+- [Phase 05-handoffs-integration-and-student-polish]: TODO-2 uses student_customer = None conditional guard (not try/except) — more Pythonic for data setup TODOs
 
 ### Pending Todos
 
