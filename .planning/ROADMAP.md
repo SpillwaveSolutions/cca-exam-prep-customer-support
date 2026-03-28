@@ -93,11 +93,11 @@ Plans:
   2. Coordinator-subagent pattern routes a complex query to the correct subagent and returns structured results
   3. Integration notebook (07) runs a scenario that touches all 6 CCA patterns in sequence with observable output for each
   4. At least 3 TODO placeholders exist across notebooks that students can complete without breaking notebook execution
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 05-01: TBD
-- [ ] 05-02: TBD
+- [ ] 05-01-PLAN.md — tool_choice forced escalation, coordinator-subagent pattern, raw_handoff anti-pattern, behavior-first tests
+- [ ] 05-02-PLAN.md — Notebooks 06 (handoffs) and 07 (integration capstone), student TODO placeholders, notebook smoke tests
 
 ### Phase 6: Testing and CI/CD
 **Goal**: The project has automated test coverage and CI/CD that itself demonstrates CCA best practices for code generation with Claude
