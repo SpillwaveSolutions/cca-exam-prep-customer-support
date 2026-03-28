@@ -107,9 +107,9 @@
 | NB-06 | Phase 4 | Complete |
 | NB-07 | Phase 5 | Complete |
 | NB-08 | Phase 5 | Complete |
-| CICD-01 | Phase 6 | Pending |
-| CICD-02 | Phase 6 | Pending |
-| CICD-03 | Phase 6 | Pending |
+| CICD-01 | Phase 6 | Complete |
+| CICD-02 | Phase 6 | Complete |
+| CICD-03 | Phase 6 | Complete |
 | STUDENT-01 | Phase 5 | Complete |
 | STUDENT-02 | Phase 2 | Complete |
 
