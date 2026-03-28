@@ -107,11 +107,11 @@ Plans:
   1. `poetry run pytest` passes with tests covering all escalation rules, compliance hooks, and tool routing
   2. GitHub Actions workflow runs `claude -p --bare` for PR review and linting on push
   3. `.claude/CLAUDE.md` and custom skills files exist and are referenced in a meta-teaching section explaining how the project itself follows CCA best practices
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 06-01: TBD
-- [ ] 06-02: TBD
+- [ ] 06-01-PLAN.md — CI workflow with annotated CCA flags, custom skill for CCA review, test gap analysis
+- [ ] 06-02-PLAN.md — README meta-teaching section, notebook 08 (meta-teaching), inline callouts in existing notebooks
 
 ## Progress
 
