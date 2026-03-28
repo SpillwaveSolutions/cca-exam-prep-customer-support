@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 06-01-PLAN.md
-last_updated: "2026-03-28T23:08:19.283Z"
+stopped_at: Completed 06-02-PLAN.md
+last_updated: "2026-03-28T23:13:28.462Z"
 progress:
   total_phases: 6
-  completed_phases: 5
+  completed_phases: 6
   total_plans: 13
-  completed_plans: 12
+  completed_plans: 13
 ---
 
 # Project State
@@ -57,6 +57,7 @@ Plan: 1 of 2
 | Phase 05-handoffs-integration-and-student-polish P01 | 35 | 2 tasks | 7 files |
 | Phase 05-handoffs-integration-and-student-polish P02 | 20 | 2 tasks | 3 files |
 | Phase 06-testing-and-ci-cd P01 | 5 | 2 tasks | 3 files |
+| Phase 06-testing-and-ci-cd P02 | 3 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -98,6 +99,8 @@ Recent decisions affecting current work:
 - [Phase 06-testing-and-ci-cd]: CI workflow is itself a CCA teaching artifact — every flag has an inline exam comment
 - [Phase 06-testing-and-ci-cd]: jq -r '.result' extracts text from --output-format json envelope before gh pr comment (CCA CI/CD rule)
 - [Phase 06-testing-and-ci-cd]: Gap analysis maps 100 automated tests + 19 manual checks; zero genuine gaps in CCA behavioral coverage
+- [Phase 06-testing-and-ci-cd]: Blue border (#2196F3) for meta-teaching callouts — distinct from red (anti-pattern) and green (correct) CCA Exam Tip boxes
+- [Phase 06-testing-and-ci-cd]: NB08 has verification code cell that checks all 6 CI flags with PASS/FAIL output for student reference
 
 ### Pending Todos
 
@@ -111,6 +114,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T23:08:13.429Z
-Stopped at: Completed 06-01-PLAN.md
+Last session: 2026-03-28T23:13:28.460Z
+Stopped at: Completed 06-02-PLAN.md
 Resume file: None
