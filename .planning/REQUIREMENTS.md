@@ -94,11 +94,11 @@
 | ANTI-02 | Phase 3 | Complete |
 | ANTI-03 | Phase 3 | Complete |
 | ANTI-04 | Phase 4 | Complete |
-| ANTI-05 | Phase 5 | Pending |
+| ANTI-05 | Phase 5 | Complete |
 | OPTIM-01 | Phase 4 | Complete |
 | OPTIM-02 | Phase 4 | Complete |
-| HANDOFF-01 | Phase 5 | Pending |
-| HANDOFF-02 | Phase 5 | Pending |
+| HANDOFF-01 | Phase 5 | Complete |
+| HANDOFF-02 | Phase 5 | Complete |
 | NB-01 | Phase 1 | Complete |
 | NB-02 | Phase 3 | Complete |
 | NB-03 | Phase 3 | Complete |

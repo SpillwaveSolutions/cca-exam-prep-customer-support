@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-stopped_at: Phase 5 context gathered
-last_updated: "2026-03-28T03:37:26.100Z"
+stopped_at: Completed 05-01-PLAN.md
+last_updated: "2026-03-28T04:05:51.076Z"
 progress:
   total_phases: 6
   completed_phases: 4
-  total_plans: 9
-  completed_plans: 9
+  total_plans: 11
+  completed_plans: 10
 ---
 
 # Project State
@@ -19,11 +19,11 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-25)
 
 **Core value:** Students can run code that demonstrates every CCA Customer Support anti-pattern failure and its correct architectural fix
-**Current focus:** Phase 04 — caching-and-context-notebooks
+**Current focus:** Phase 05 — handoffs-integration-and-student-polish
 
 ## Current Position
 
-Phase: 04 (caching-and-context-notebooks) — EXECUTING
+Phase: 05 (handoffs-integration-and-student-polish) — EXECUTING
 Plan: 1 of 2
 
 ## Performance Metrics
@@ -54,6 +54,7 @@ Plan: 1 of 2
 | Phase 03-callbacks-enforcement-and-first-notebooks P03 | 292 | 2 tasks | 4 files |
 | Phase 04-caching-and-context-notebooks P01 | 6 | 2 tasks | 9 files |
 | Phase 04-caching-and-context-notebooks P02 | 5 | 2 tasks | 3 files |
+| Phase 05-handoffs-integration-and-student-polish P01 | 35 | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -87,6 +88,8 @@ Recent decisions affecting current work:
 - [Phase 04-caching-and-context-notebooks]: agent_loop system_prompt type widened to str | list[dict] — no logic change, SDK handles both natively
 - [Phase 04-caching-and-context-notebooks]: _UsageWrapper inline in NB04 code cells — bridges AgentResult.usage to print_usage without external dependency
 - [Phase 04-caching-and-context-notebooks]: NB05 per-turn cell pairs for pedagogical visibility of O(n) transcript growth; birthday fact in pending_actions survives compaction
+- [Phase 05-handoffs-integration-and-student-polish]: tool_choice forced escalation: _has_escalation_required detects blocked refunds; second API call with tool_choice=escalate_to_human; stop_reason='escalated' overrides forced response stop_reason
+- [Phase 05-handoffs-integration-and-student-polish]: coordinator isolation: subagent receives only explicit context string (Customer ID, tier, task, details) — never coordinator messages list or system prompt
 
 ### Pending Todos
 
@@ -100,6 +103,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T03:37:26.098Z
-Stopped at: Phase 5 context gathered
-Resume file: .planning/phases/05-handoffs-integration-and-student-polish/05-CONTEXT.md
+Last session: 2026-03-28T04:05:51.074Z
+Stopped at: Completed 05-01-PLAN.md
+Resume file: None
