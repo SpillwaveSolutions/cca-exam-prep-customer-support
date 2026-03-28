@@ -1,0 +1,154 @@
+# GitHub Actions CI/CD Workflow
+# CCA Teaching Artifact: This workflow demonstrates CI/CD patterns from the
+# CCA certification exam. Every Claude-related flag has an inline comment
+# explaining its exam significance.
+#
+# CCA Rule (CICD-01): Use -p --bare for non-interactive, reproducible CI runs.
+# CCA Rule (CICD-02): Schedule nightly cron runs for regression detection.
+# CCA Rule (CICD-03): Parse --output-format json with jq before posting comments.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    # on pull_request: triggers claude-review job for CCA compliance checking
+  schedule:
+    # schedule/cron: CICD-02 requires nightly runs for regression detection
+    # (CCA exam: cron ensures test suite runs even without commits)
+    - cron: '0 6 * * *'
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Job 1: test-and-lint
+  # Runs on: push to main AND nightly cron schedule
+  # Purpose: Verify test suite passes and code style is clean
+  # ---------------------------------------------------------------------------
+  test-and-lint:
+    if: github.event_name == 'push' || github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Run pytest
+        run: poetry run pytest
+
+      - name: Run ruff lint
+        run: poetry run ruff check src/
+
+  # ---------------------------------------------------------------------------
+  # Job 2: claude-review
+  # Runs on: pull_request only
+  # Purpose: CCA compliance review of PR diff using claude -p --bare
+  #
+  # CCA Teaching Point: This job IS the CCA pattern for CI/CD agents.
+  # Every flag choice is exam-relevant.
+  # ---------------------------------------------------------------------------
+  claude-review:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+
+    permissions:
+      pull-requests: write  # Required to post PR comments
+
+    env:
+      # ANTHROPIC_API_KEY as secret: credentials in user-level config, never project files (CCA rule)
+      # (CCA exam: hardcoding API keys in workflow YAML is a critical security violation)
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history needed to diff against base branch
+
+      - name: Install Claude CLI
+        # Install the Anthropic Claude CLI (claude) via npm
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
+      - name: Get PR diff
+        id: diff
+        run: |
+          git diff origin/${{ github.base_ref }}...HEAD > /tmp/pr_diff.txt
+          echo "Diff captured: $(wc -l < /tmp/pr_diff.txt) lines"
+
+      - name: Run CCA compliance review
+        id: review
+        run: |
+          # -p flag: MANDATORY for non-interactive CI
+          # (CCA exam: without -p, pipeline hangs waiting for input)
+          #
+          # --bare flag: RECOMMENDED for reproducibility
+          # (no CLAUDE.md loaded, deterministic behavior regardless of project config)
+          #
+          # --output-format json: structured output at CLI level
+          # (CCA exam: enables programmatic parsing; raw text output is non-deterministic)
+          #
+          # --allowedTools Read,Grep,Glob: sandboxing
+          # (CCA exam: principle of least privilege for CI agents; no Write, no Bash)
+          REVIEW_JSON=$(claude \
+            -p \
+            --bare \
+            --output-format json \
+            --allowedTools Read,Grep,Glob \
+            "Review this pull request diff for CCA (Claude Certification for Agentic systems) compliance.
+
+          Check for these CCA anti-patterns:
+          1. Escalation: Are routing decisions deterministic (code), not confidence-based (prompt)?
+          2. Compliance: Are business rules enforced in code callbacks/hooks, NOT only in system prompts?
+          3. Tool count: Does any agent have more than 5 tools? (4-5 is the CCA limit)
+          4. Tool descriptions: Do descriptions include negative bounds ('does NOT...')?
+          5. Context management: Are summaries structured JSON, not raw transcripts?
+          6. Cost optimization: Is Batch API used for live support? (WRONG -- use Prompt Caching)
+          7. Handoffs: Are escalations structured JSON (EscalationRecord), not raw conversation dumps?
+          8. CI/CD: Are -p and --bare flags used in CI workflows?
+
+          For each issue found, report: file, line (if applicable), severity (warn/fail), explanation.
+          End with a summary: PASS (no issues) or REVIEW NEEDED (N issues found).
+
+          PR Diff:
+          $(cat /tmp/pr_diff.txt)")
+
+          # jq -r '.result': --output-format json returns a JSON envelope; posting raw JSON as a
+          # PR comment is unreadable (CCA teaching point: structured output requires programmatic parsing)
+          REVIEW_TEXT=$(echo "$REVIEW_JSON" | jq -r '.result')
+
+          # Store extracted text for the next step
+          # Using a heredoc to safely handle multi-line output with special characters
+          {
+            echo "review_text<<REVIEW_DELIMITER"
+            echo "$REVIEW_TEXT"
+            echo "REVIEW_DELIMITER"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Post CCA compliance review as PR comment
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Post the EXTRACTED text (not raw JSON) as a PR comment
+          # gh pr comment uses the extracted .result field, not the raw JSON envelope
+          gh pr comment ${{ github.event.pull_request.number }} \
+            --body "## CCA Compliance Review
+
+          ${{ steps.review.outputs.review_text }}
+
+          ---
+          *Reviewed by Claude using \`claude -p --bare --output-format json --allowedTools Read,Grep,Glob\`*
+          *CCA exam flags: \`-p\` (non-interactive), \`--bare\` (reproducible), \`--allowedTools\` (sandboxed)*"
