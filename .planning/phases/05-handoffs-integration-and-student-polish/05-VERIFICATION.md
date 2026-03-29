@@ -1,8 +1,9 @@
 ---
 phase: 05-handoffs-integration-and-student-polish
 verified: 2026-03-27T00:00:00Z
-status: gaps_found
-score: 3/5 must-haves verified
+status: passed
+score: 5/5 must-haves verified
+resolution_note: "Gaps resolved in commit eed1150 — get_all_escalations() → get_escalations() in 3 notebook cells"
 gaps:
   - truth: "Notebook 06 shows raw handoff anti-pattern (tool_use noise) vs structured EscalationRecord"
     status: failed
