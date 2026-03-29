@@ -1,0 +1,288 @@
+"""Generate notebooks/01_escalation.ipynb using nbformat."""
+
+from pathlib import Path
+
+import nbformat
+import nbformat.v4 as nbf
+
+cells = []
+
+# ---------------------------------------------------------------------------
+# Cell 1: Title markdown
+# ---------------------------------------------------------------------------
+cells.append(
+    nbf.new_markdown_cell(
+        "# Notebook 01: Escalation Pattern\n\n"
+        "The CCA exam tests whether you understand that escalation routing "
+        "must use **deterministic business rules enforced in code**, not "
+        "self-reported LLM confidence scores. This notebook shows both patterns "
+        "on the same scenario — a \\$600 refund for customer C003 — so you can "
+        "see the difference in observable behavior.\n\n"
+        "Pattern covered: **PostToolUse callbacks with deterministic escalation rules** "
+        "vs. confidence-based routing in the system prompt."
+    )
+)
+
+# ---------------------------------------------------------------------------
+# Cell 2: Setup section header
+# ---------------------------------------------------------------------------
+cells.append(nbf.new_markdown_cell("## Setup"))
+
+# ---------------------------------------------------------------------------
+# Cell 3: Imports
+# ---------------------------------------------------------------------------
+cells.append(
+    nbf.new_code_cell(
+        "import sys\n"
+        "from pathlib import Path\n"
+        "\n"
+        "# Add project root so notebooks.helpers and customer_service are importable\n"
+        "sys.path.insert(0, str(Path('.').resolve()))\n"
+        "\n"
+        "import anthropic\n"
+        "from customer_service.data.customers import CUSTOMERS\n"
+        "from customer_service.data.scenarios import SCENARIOS\n"
+        "from customer_service.services.audit_log import AuditLog\n"
+        "from customer_service.services.container import ServiceContainer\n"
+        "from customer_service.services.customer_db import CustomerDatabase\n"
+        "from customer_service.services.escalation_queue import EscalationQueue\n"
+        "from customer_service.services.financial_system import FinancialSystem\n"
+        "from customer_service.services.policy_engine import PolicyEngine\n"
+        "from helpers import compare_results, print_usage\n"
+    )
+)
+
+# ---------------------------------------------------------------------------
+# Cell 4: Client and services setup
+# ---------------------------------------------------------------------------
+cells.append(
+    nbf.new_code_cell(
+        "def make_services() -> ServiceContainer:\n"
+        '    """Create a fresh ServiceContainer with seed customer data."""\n'
+        "    return ServiceContainer(\n"
+        "        customer_db=CustomerDatabase(CUSTOMERS),\n"
+        "        policy_engine=PolicyEngine(),\n"
+        "        financial_system=FinancialSystem(),\n"
+        "        escalation_queue=EscalationQueue(),\n"
+        "        audit_log=AuditLog(),\n"
+        "    )\n"
+        "\n"
+        "\n"
+        "client = anthropic.Anthropic()\n"
+        "scenario = SCENARIOS['amount_threshold']  # C003, $600 refund\n"
+        "print(f\"Scenario: {scenario['customer_id']} - {scenario['message']}\")\n"
+        "print(f\"Expected outcome: {scenario['expected_outcome']}\")\n"
+    )
+)
+
+# ---------------------------------------------------------------------------
+# Cell 5: Anti-pattern markdown (red box)
+# ---------------------------------------------------------------------------
+cells.append(
+    nbf.new_markdown_cell(
+        "## Anti-Pattern: LLM Confidence-Based Escalation\n\n"
+        '<div style="border-left: 4px solid #dc3545; padding: 12px 16px; '
+        'background: #fff5f5; margin: 8px 0;">\n'
+        "<strong>What's wrong:</strong> The system prompt asks Claude to "
+        "self-rate confidence from 0–100 and only escalate if below 70. "
+        "Claude typically rates itself highly confident — even on a $600 "
+        "refund that should trigger mandatory escalation — and handles the "
+        "case directly instead of escalating to a human agent.\n"
+        "</div>"
+    )
+)
+
+# ---------------------------------------------------------------------------
+# Cell 6: Run anti-pattern
+# ---------------------------------------------------------------------------
+cells.append(
+    nbf.new_code_cell(
+        "from customer_service.anti_patterns.confidence_escalation import run_confidence_agent\n"
+        "\n"
+        "# Fresh services to isolate anti-pattern run\n"
+        "anti_services = make_services()\n"
+        "print('Running anti-pattern (confidence-based escalation)...')\n"
+        "anti_result = run_confidence_agent(client, anti_services, scenario['message'])\n"
+        "print(f'Stop reason: {anti_result.stop_reason}')\n"
+        "print(f'Tool calls: {[tc[\"name\"] for tc in anti_result.tool_calls]}')\n"
+        "print(f'\\nAgent response:\\n{anti_result.final_text[:500]}')\n"
+    )
+)
+
+# ---------------------------------------------------------------------------
+# Cell 7: Check anti-pattern escalation queue
+# ---------------------------------------------------------------------------
+cells.append(
+    nbf.new_code_cell(
+        "# THE KEY CHECK: did the anti-pattern actually escalate?\n"
+        "anti_escalations = anti_services.escalation_queue.get_queue()\n"
+        "print(f'Escalation queue length: {len(anti_escalations)}')\n"
+        "if not anti_escalations:\n"
+        "    print('FAILURE: Agent did NOT escalate despite $600 refund')\n"
+        "    print('(amount > $500 threshold)')\n"
+        "    print('The confidence-based approach let Claude handle the case itself.')\n"
+        "else:\n"
+        "    print('Note: Agent did escalate this run (probabilistic behavior varies by run)')\n"
+        "    for esc in anti_escalations:\n"
+        "        print(f'  Escalation reason: {esc.reason}')\n"
+    )
+)
+
+# ---------------------------------------------------------------------------
+# Cell 8: Print usage for anti-pattern
+# ---------------------------------------------------------------------------
+cells.append(
+    nbf.new_code_cell(
+        "# Token usage for anti-pattern run\n"
+        "# AgentResult.usage is a UsageSummary dataclass — wrap it for print_usage\n"
+        "class _UsageWrapper:\n"
+        "    def __init__(self, u):\n"
+        "        self.usage = u\n"
+        "\n"
+        "print_usage(_UsageWrapper(anti_result.usage))\n"
+    )
+)
+
+# ---------------------------------------------------------------------------
+# Cell 9: Correct pattern markdown (green box)
+# ---------------------------------------------------------------------------
+cells.append(
+    nbf.new_markdown_cell(
+        "## Correct Pattern: Deterministic Callback Enforcement\n\n"
+        '<div style="border-left: 4px solid #28a745; padding: 12px 16px; '
+        'background: #f0fff4; margin: 8px 0;">\n'
+        "<strong>Why this works:</strong> PostToolUse callbacks check business "
+        "rules in code: amount &gt; $500 triggers mandatory escalation. The callback "
+        "blocks the <code>process_refund</code> tool call and returns a result "
+        "telling Claude it must call <code>escalate_to_human</code>. This is "
+        "deterministic — Claude cannot talk its way out of escalation.\n"
+        "</div>"
+    )
+)
+
+# ---------------------------------------------------------------------------
+# Cell 10: Run correct pattern
+# ---------------------------------------------------------------------------
+cells.append(
+    nbf.new_code_cell(
+        "from customer_service.agent import build_callbacks, get_system_prompt, run_agent_loop\n"
+        "\n"
+        "correct_services = make_services()\n"
+        "callbacks = build_callbacks()\n"
+        "print('Running correct pattern (deterministic callback enforcement)...')\n"
+        "correct_result = run_agent_loop(\n"
+        "    client,\n"
+        "    correct_services,\n"
+        "    scenario['message'],\n"
+        "    get_system_prompt(),\n"
+        "    callbacks=callbacks,\n"
+        ")\n"
+        "print(f'Stop reason: {correct_result.stop_reason}')\n"
+        "print(f'Tool calls: {[tc[\"name\"] for tc in correct_result.tool_calls]}')\n"
+        "print(f'\\nAgent response:\\n{correct_result.final_text[:500]}')\n"
+    )
+)
+
+# ---------------------------------------------------------------------------
+# Cell 11: Check correct pattern escalation queue
+# ---------------------------------------------------------------------------
+cells.append(
+    nbf.new_code_cell(
+        "# Verify: correct pattern MUST escalate the $600 refund\n"
+        "correct_escalations = correct_services.escalation_queue.get_queue()\n"
+        "print(f'Escalation queue length: {len(correct_escalations)}')\n"
+        "if correct_escalations:\n"
+        "    print('SUCCESS: Agent correctly escalated the $600 refund case')\n"
+        "    esc = correct_escalations[0]\n"
+        "    print(f'  Customer: {esc.customer_id}')\n"
+        "    print(f'  Reason: {esc.reason}')\n"
+        "else:\n"
+        "    print('UNEXPECTED: Correct pattern did not escalate — check callbacks.py')\n"
+    )
+)
+
+# ---------------------------------------------------------------------------
+# Cell 12: Print usage for correct pattern
+# ---------------------------------------------------------------------------
+cells.append(nbf.new_code_cell("print_usage(_UsageWrapper(correct_result.usage))\n"))
+
+# ---------------------------------------------------------------------------
+# Cell 13: Compare results header
+# ---------------------------------------------------------------------------
+cells.append(nbf.new_markdown_cell("## Compare Results"))
+
+# ---------------------------------------------------------------------------
+# Cell 14: Side-by-side comparison
+# ---------------------------------------------------------------------------
+cells.append(
+    nbf.new_code_cell(
+        "compare_results(\n"
+        "    {\n"
+        "        'escalated': bool(anti_escalations),\n"
+        "        'escalation_queue_size': len(anti_escalations),\n"
+        "        'tool_calls': len(anti_result.tool_calls),\n"
+        "    },\n"
+        "    {\n"
+        "        'escalated': bool(correct_escalations),\n"
+        "        'escalation_queue_size': len(correct_escalations),\n"
+        "        'tool_calls': len(correct_result.tool_calls),\n"
+        "    },\n"
+        ")\n"
+    )
+)
+
+# ---------------------------------------------------------------------------
+# Cell 15: CCA Exam Tip
+# ---------------------------------------------------------------------------
+cells.append(
+    nbf.new_markdown_cell(
+        '> **CCA Exam Tip:** If an exam answer mentions "confidence threshold," '
+        '"self-assessment," or "let the model decide when to escalate," it is '
+        "ALWAYS wrong. Escalation routing must use deterministic business rules "
+        "enforced in code (PostToolUse callbacks), never LLM self-reported "
+        "confidence. The correct answer always involves programmatic enforcement."
+    )
+)
+
+# ---------------------------------------------------------------------------
+# Cell 16: Summary
+# ---------------------------------------------------------------------------
+cells.append(
+    nbf.new_markdown_cell(
+        "## Summary\n\n"
+        "- **Anti-pattern failure:** Confidence-based routing in the system prompt is "
+        "probabilistic — Claude self-reports high confidence and skips escalation "
+        "for a \\$600 refund that business rules require to be escalated.\n"
+        "- **Correct pattern guarantee:** PostToolUse callbacks enforce deterministic "
+        "rules: `amount > 500` blocks `process_refund` and forces Claude to call "
+        "`escalate_to_human`, regardless of what Claude thinks its confidence is.\n"
+        "- **Key principle:** System prompts provide context; callbacks enforce rules. "
+        "This is the CCA #1 architectural principle — programmatic enforcement beats "
+        "prompt-based guidance every time."
+    )
+)
+
+# ---------------------------------------------------------------------------
+# Build and write notebook
+# ---------------------------------------------------------------------------
+nb = nbf.new_notebook()
+nb.cells = cells
+nb.metadata.update(
+    {
+        "kernelspec": {
+            "display_name": "Python 3",
+            "language": "python",
+            "name": "python3",
+        },
+        "language_info": {
+            "name": "python",
+            "version": "3.13.0",
+        },
+    }
+)
+
+output_path = Path(__file__).parent.parent / "notebooks" / "01_escalation.ipynb"
+with output_path.open("w") as f:
+    nbformat.write(nb, f)
+
+print(f"Written: {output_path}")
