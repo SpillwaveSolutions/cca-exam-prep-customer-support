@@ -2,62 +2,74 @@
 
 ## What This Is
 
-A hands-on coding example for the CCA Exam Prep course that demonstrates all 6 architectural patterns from the Customer Support Resolution Agent scenario article. Students learn by running anti-patterns (the wrong way) side-by-side with correct patterns (the right way) through Jupyter notebooks, backed by a production-quality Python package using the Claude API.
+A hands-on coding example for the CCA Exam Prep course that demonstrates all 6 architectural patterns from the Customer Support Resolution Agent scenario article. Students learn by running anti-patterns (the wrong way) side-by-side with correct patterns (the right way) through 9 Jupyter notebooks, backed by a production-quality Python package using the Claude API. The project itself demonstrates CCA meta-patterns: `.claude/CLAUDE.md` hierarchy, CI/CD with `-p --bare`, and custom skills.
 
 ## Core Value
 
 Students can run code that demonstrates every CCA Customer Support anti-pattern failure and its correct architectural fix, so they internalize the patterns before exam day.
 
+## Current State
+
+**Shipped:** v1.0 — 2026-03-28
+**Stack:** Python 3.13+, Poetry, Pydantic v2, Anthropic SDK 0.86.0
+**Code:** 2,872 LOC production + 3,841 LOC tests = 6,713 total
+**Tests:** 234 passing (0.10s)
+**Notebooks:** 9 (00-08) covering all 6 CCA patterns + setup + integration + meta-teaching
+
 ## Requirements
 
-### Validated
+### Validated (v1.0)
 
-- [x] Importable Python package skeleton with 6 sub-packages — Validated in Phase 1: Project Foundation
-- [x] Notebook template with anti-pattern vs correct-pattern visual differentiation (red/green HTML boxes) — Validated in Phase 1
-- [x] Setup notebook (00) with 4 environment verification checks — Validated in Phase 1
-- [x] Pre-commit hooks (nbstripout + ruff) — Validated in Phase 1
-- [x] print_usage and compare_results helpers for token accounting — Validated in Phase 1
-- [x] Taskfile.yml for automated project setup and verification — Validated in Phase 1
-
-- [x] 6 Pydantic models, 5 deterministic services, frozen ServiceContainer — Validated in Phase 2
-- [x] 5 focused tool schemas with negative-bound descriptions from model_json_schema() — Validated in Phase 2
-- [x] Dict-based dispatch registry routing tool_use blocks to handlers — Validated in Phase 2
-- [x] stop_reason-controlled agentic loop with UsageSummary for print_usage — Validated in Phase 2
-- [x] Seed data: 6 customers (C001-C006) + 6 scenarios targeting CCA escalation rules — Validated in Phase 2
-- [x] CCA compliance: $500 threshold, JSON string returns, negative bounds, no content-type checking — Validated in Phase 2
+- ✓ Importable Python package with 6 sub-packages — v1.0
+- ✓ 6 Pydantic models, 5 deterministic services, frozen ServiceContainer — v1.0
+- ✓ 5 focused tool schemas with negative-bound descriptions — v1.0
+- ✓ stop_reason-controlled agentic loop with UsageSummary — v1.0
+- ✓ Per-tool callback registry with two-step vetoable process_refund — v1.0
+- ✓ Programmatic PII redaction before audit log write — v1.0
+- ✓ 3 anti-pattern modules (confidence, prompt compliance, Swiss Army) — v1.0
+- ✓ Prompt caching with POLICY_DOCUMENT (4079 tokens) + cache_control — v1.0
+- ✓ ContextSummary with budget compaction — v1.0
+- ✓ tool_choice forced structured escalation handoffs — v1.0
+- ✓ Coordinator-subagent with context isolation — v1.0
+- ✓ 9 notebooks (00-08) with CCA Exam Tip boxes — v1.0
+- ✓ Seed data: 6 customers + 6 scenarios targeting all escalation rules — v1.0
+- ✓ GitHub Actions CI/CD with `-p --bare --output-format json` — v1.0
+- ✓ Custom CCA compliance review skill — v1.0
+- ✓ 3+ student TODO placeholders with try/except guards — v1.0
+- ✓ Behavior-first testing: test stores not API responses — v1.0
 
 ### Active
 
-- [ ] Notebooks (00-07) covering all 6 CCA patterns with anti-pattern vs correct pattern contrast
-- [ ] Production Python package with callbacks and enforcement layer
-- [ ] Deterministic escalation logic via PostToolUse callbacks (amount > $500, account closure, VIP, legal)
-- [ ] Programmatic compliance enforcement in application layer, not prompt instructions
-- [ ] 5 focused tools per agent (lookup_customer, check_policy, process_refund, escalate_to_human, log_interaction)
-- [ ] 15-tool Swiss Army anti-pattern for tool design comparison
-- [ ] Prompt caching demonstration with cache_control markers on static policy context
-- [ ] Structured JSON escalation handoffs via tool_choice enforcement
-- [ ] Context management with structured summaries vs raw transcript comparison
-- [ ] Coordinator-subagent pattern for when tools exceed 4-5 per agent
-- [ ] GitHub Actions CI/CD with `claude -p --bare` (PR review, nightly cron, weekly docs)
-- [ ] Project-level `.claude/CLAUDE.md` and custom skills as living CCA best-practice examples
-- [ ] Simulated in-memory services (students only need ANTHROPIC_API_KEY)
-- [ ] Student contribution opportunities (TODO placeholders for hands-on learning)
+(None — next milestone requirements TBD)
 
 ### Out of Scope
 
 - Real database or external service integrations — simulated only, zero infrastructure setup
-- Firebase backend — was considered, decided against for student simplicity
 - Claude Agent SDK — using raw Anthropic Python SDK to teach fundamentals
-- Async/streaming — synchronous calls keep the teaching code readable
+- Async/streaming — synchronous calls keep teaching code readable
 - Deployment or production hosting — this is a learning project
+- Streamlit UI — considered but deferred
+
+## Key Decisions
+
+| Decision | Rationale | Outcome |
+|----------|-----------|---------|
+| Simulated services over Firebase | Students need zero infrastructure setup | ✓ Good |
+| Both notebooks AND package | Notebooks for learning, package for production reference | ✓ Good |
+| Anti-pattern-first ordering | "Productive failure" — feel the pain before the fix | ✓ Good |
+| 5 focused tools matching article spec | Direct mapping to CCA exam tool count guidance (4-5) | ✓ Good |
+| Per-tool callback registry | Each callback fires only for its registered tool, no cross-tool bugs | ✓ Good |
+| Block-not-bypass escalation | Claude calls escalate_to_human naturally, preserving expected tool trace | ✓ Good |
+| Pre-handler redaction for log_interaction | PII must never reach audit log — redact before write, not after | ✓ Good |
+| claude -p --bare for CI/CD | Demonstrates CCA Article 2 best practices in the project itself | ✓ Good |
+| Behavior-first testing rules | Emerged from PII audit log bug — test stores, not API responses | ✓ Good |
+| CCA-RULES.md as authoritative reference | Extracted from all 8 source articles, prevents contradicting exam material | ✓ Good |
 
 ## Context
 
-This is the first coding example in a CCA Exam Prep course series by Rick Hightower at Spillwave. The companion article (published at /Users/richardhightower/articles/articles/cca-customer-support/work/final/article_publication_ready.md) covers the Customer Support Resolution Agent scenario — the hardest of the 6 CCA exam scenarios. The article identifies 6 decision patterns where candidates pick the plausible-sounding wrong answer.
+This is the first coding example in a CCA Exam Prep course series by Rick Hightower at Spillwave. The companion article covers the Customer Support Resolution Agent scenario — the hardest of the 6 CCA exam scenarios. The article identifies 6 decision patterns where candidates pick the plausible-sounding wrong answer.
 
-The project itself serves as a meta-teaching tool: the `.claude/CLAUDE.md`, custom skills, and GitHub Actions CI/CD demonstrate the CCA best practices that Article 2 (Code Generation with Claude Code) covers — CLAUDE.md hierarchy, `-p` flag for CI/CD, custom skills.
-
-Rick has completed the Claude API course on Anthropic Academy and works in Python 3.13+ with Poetry, Pydantic, and multiple LLM integrations.
+Known tech debt: VALIDATION.md `nyquist_compliant` frontmatter never flipped to `true` (cosmetic), notebook smoke tests are structural only. See `.planning/v1.0-MILESTONE-AUDIT.md` for full audit.
 
 ## Constraints
 
@@ -65,19 +77,8 @@ Rick has completed the Claude API course on Anthropic Academy and works in Pytho
 - **API**: Anthropic Python SDK (anthropic >= 0.42.0), Pydantic >= 2.0
 - **Format**: Both Jupyter notebooks (teaching) AND Python package (production)
 - **Dependencies**: Students need only `ANTHROPIC_API_KEY` — no other services
-- **Teaching**: Each notebook must show WRONG way first, then CORRECT way
+- **Teaching**: Each notebook shows WRONG way first, then CORRECT way
 - **CCA Accuracy**: All patterns must match Anthropic's recommended architectural patterns exactly
 
-## Key Decisions
-
-| Decision | Rationale | Outcome |
-|----------|-----------|---------|
-| Simulated services over Firebase | Students need zero infrastructure setup | — Pending |
-| Both notebooks AND package | Notebooks for learning, package for production reference | — Pending |
-| Side-by-side anti-pattern contrast | Mirrors exam format — wrong answers look right | — Pending |
-| 5 focused tools matching article spec | Direct mapping to CCA exam tool count guidance (4-5) | — Pending |
-| PostToolUse callbacks for enforcement | Matches Claude Agent SDK pattern; programmatic > prompt-based | — Pending |
-| claude -p --bare for CI/CD | Demonstrates CCA Article 2 best practices in the project itself | — Pending |
-
 ---
-*Last updated: 2026-03-26 after Phase 2 completion*
+*Last updated: 2026-03-28 after v1.0 milestone*
