@@ -38,9 +38,13 @@ Students can run code that demonstrates every CCA Customer Support anti-pattern 
 - ✓ 3+ student TODO placeholders with try/except guards — v1.0
 - ✓ Behavior-first testing: test stores not API responses — v1.0
 
-### Active
+### Active (v1.1 — Notebook Fixes)
 
-(None — next milestone requirements TBD)
+- [ ] Fix `make_services()` seed data initialization in NB04 and NB05
+- [ ] Fix $600 refund escalation callback not triggering in NB01
+- [ ] Fix context management anti-pattern demo in NB05
+- [ ] Review and complete handoffs notebook (NB06) — verify output, complete TODOs
+- [ ] Complete integration notebook (NB07) — implement all remaining TODOs
 
 ### Out of Scope
 
@@ -81,4 +85,16 @@ Known tech debt: VALIDATION.md `nyquist_compliant` frontmatter never flipped to 
 - **CCA Accuracy**: All patterns must match Anthropic's recommended architectural patterns exactly
 
 ---
-*Last updated: 2026-03-28 after v1.0 milestone*
+## Current Milestone: v1.1 Notebook Fixes
+
+**Goal:** Fix broken notebook cells and complete unfinished notebook sections so all 9 notebooks run end-to-end correctly.
+
+**Target fixes:**
+- `make_services()` missing seed data (blocks NB04, NB05)
+- Escalation callback not firing for $600 refund (NB01)
+- Context management anti-pattern demo broken (NB05)
+- Handoffs notebook incomplete/suspect output (NB06)
+- Integration notebook has remaining TODOs (NB07)
+
+---
+*Last updated: 2026-04-06 after v1.1 milestone start*
