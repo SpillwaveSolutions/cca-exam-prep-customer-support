@@ -104,7 +104,7 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-None yet.
+1. Fix $600 refund escalation not triggering in correct pattern (area: agent) — `.planning/todos/pending/2026-04-06-fix-600-refund-escalation-not-triggering.md`
 
 ### Blockers/Concerns
 
