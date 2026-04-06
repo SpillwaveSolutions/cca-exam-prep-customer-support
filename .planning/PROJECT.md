@@ -40,9 +40,9 @@ Students can run code that demonstrates every CCA Customer Support anti-pattern 
 
 ### Active (v1.1 — Notebook Fixes)
 
-- [ ] Fix `make_services()` seed data initialization in NB04 and NB05
-- [ ] Fix $600 refund escalation callback not triggering in NB01
-- [ ] Fix context management anti-pattern demo in NB05
+- ✓ Fix `make_services()` seed data initialization in NB04 and NB05 — Phase 7
+- ✓ Fix $600 refund escalation callback not triggering in NB01 — Phase 7
+- ✓ Fix context management anti-pattern demo in NB05 — Phase 7
 - [ ] Review and complete handoffs notebook (NB06) — verify output, complete TODOs
 - [ ] Complete integration notebook (NB07) — implement all remaining TODOs
 
@@ -97,4 +97,4 @@ Known tech debt: VALIDATION.md `nyquist_compliant` frontmatter never flipped to 
 - Integration notebook has remaining TODOs (NB07)
 
 ---
-*Last updated: 2026-04-06 after v1.1 milestone start*
+*Last updated: 2026-04-06 after Phase 7 completion*
