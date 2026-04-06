@@ -2,11 +2,11 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Notebook Fixes
-status: defining-requirements
+status: roadmap-ready
 stopped_at: null
-last_updated: "2026-04-06T16:05:00.000Z"
+last_updated: "2026-04-06T00:00:00.000Z"
 progress:
-  total_phases: 0
+  total_phases: 2
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -19,35 +19,43 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-06)
 
 **Core value:** Students can run code that demonstrates every CCA Customer Support anti-pattern failure and its correct architectural fix
-**Current focus:** v1.1 Notebook Fixes — defining requirements
+**Current focus:** v1.1 Notebook Fixes — Phase 7 (Notebook Bug Fixes) ready for planning
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: Phase 7 (not started)
 Plan: —
-Status: Defining requirements
-Last activity: 2026-04-06 — Milestone v1.1 started
+Status: Roadmap defined — ready for plan-phase
+Last activity: 2026-04-06 — v1.1 roadmap created (Phases 7-8)
+
+Progress: [----------] 0/2 phases complete
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 0
+- Total plans completed: 0 (v1.1)
 - Average duration: -
 - Total execution time: 0 hours
 
-**By Phase:**
+**By Phase (v1.1):**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| - | - | - | - |
+| 7. Notebook Bug Fixes | 0 | - | - |
+| 8. Notebook Completion | 0 | - | - |
 
 **Recent Trend:**
 
-- Last 5 plans: none
+- Last 5 plans: none (v1.1 not started)
 - Trend: N/A
 
 *Updated after each plan completion*
+
+**v1.0 historical (reference):**
+
+| Phase | Plans | Tasks | Files |
+|-------|-------|-------|-------|
 | Phase 01-project-foundation P01 | 2 | 2 tasks | 15 files |
 | Phase 01-project-foundation P02 | 5 | 2 tasks | 4 files |
 | Phase 02-models-services-and-core-loop P01 | 184 | 2 tasks | 13 files |
@@ -80,7 +88,7 @@ Recent decisions affecting current work:
 - [Phase 02-models-services-and-core-loop]: FinancialSystem.process_refund takes policy_approved bool — FinancialSystem trusts PolicyEngine, no re-evaluation
 - [Phase 02-models-services-and-core-loop]: requires_review is amount > 500 regardless of tier — VIP $4000 still triggers review
 - [Phase 02-models-services-and-core-loop]: Tool descriptions use lowercase 'does NOT' — CCA-compliant and test-matching
-- [Phase 02-models-services-and-core-loop]: Agent loop checks stop_reason \!= 'tool_use' (not == 'end_turn') to handle max_tokens and other stop reasons gracefully
+- [Phase 02-models-services-and-core-loop]: Agent loop checks stop_reason != 'tool_use' (not == 'end_turn') to handle max_tokens and other stop reasons gracefully
 - [Phase 02-models-services-and-core-loop]: Tool result messages contain ONLY tool_result blocks — no text alongside (avoids Claude API pitfall)
 - [Phase 03-callbacks-enforcement-and-first-notebooks]: compliance_callback handles both flat {details} and nested {entry.details} shapes to match log_interaction output format
 - [Phase 03-callbacks-enforcement-and-first-notebooks]: context dict created in run_agent_loop so all tool calls in a session share escalation state across iterations
@@ -103,6 +111,8 @@ Recent decisions affecting current work:
 - [Phase 06-testing-and-ci-cd]: Gap analysis maps 100 automated tests + 19 manual checks; zero genuine gaps in CCA behavioral coverage
 - [Phase 06-testing-and-ci-cd]: Blue border (#2196F3) for meta-teaching callouts — distinct from red (anti-pattern) and green (correct) CCA Exam Tip boxes
 - [Phase 06-testing-and-ci-cd]: NB08 has verification code cell that checks all 6 CI flags with PASS/FAIL output for student reference
+- [v1.1 Roadmap]: NBFIX-01 and NBFIX-02 share root cause (make_services() missing seed data) — grouped into Phase 7
+- [v1.1 Roadmap]: Phase 8 depends on Phase 7 because NB07 integration exercises the escalation path fixed in Phase 7
 
 ### Pending Todos
 
@@ -114,12 +124,11 @@ Recent decisions affecting current work:
 
 ### Blockers/Concerns
 
-- Research flag: PostToolUse callback in raw SDK (not Agent SDK) needs design validation in Phase 3 planning
-- Research flag: Prompt caching minimum token threshold depends on chosen model -- verify during Phase 4 planning
-- Research flag: Coordinator-subagent message isolation needs design research in Phase 5 planning
+(none — v1.1 roadmap defined, ready to plan Phase 7)
 
 ## Session Continuity
 
-Last session: 2026-03-28T23:13:28.460Z
-Stopped at: Completed 06-02-PLAN.md
+Last session: 2026-04-06
+Stopped at: v1.1 roadmap created — Phases 7 and 8 defined
 Resume file: None
+Next action: `/gsd:plan-phase 7`

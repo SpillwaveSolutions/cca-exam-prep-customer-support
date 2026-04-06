@@ -35,17 +35,17 @@ Requirements for the Notebook Fixes milestone. Each maps to roadmap phases.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| NBFIX-01 | TBD | Pending |
-| NBFIX-02 | TBD | Pending |
-| NBFIX-03 | TBD | Pending |
-| NBCOMP-01 | TBD | Pending |
-| NBCOMP-02 | TBD | Pending |
+| NBFIX-01 | Phase 7 | Pending |
+| NBFIX-02 | Phase 7 | Pending |
+| NBFIX-03 | Phase 7 | Pending |
+| NBCOMP-01 | Phase 8 | Pending |
+| NBCOMP-02 | Phase 8 | Pending |
 
 **Coverage:**
 - v1.1 requirements: 5 total
-- Mapped to phases: 0
-- Unmapped: 5 (pending roadmap)
+- Mapped to phases: 5
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-06*
-*Last updated: 2026-04-06 after v1.1 milestone start*
+*Last updated: 2026-04-06 after v1.1 roadmap creation (Phases 7-8)*
