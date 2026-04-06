@@ -1,0 +1,51 @@
+# Requirements: CCA Exam Prep — Customer Support Resolution Agent
+
+**Defined:** 2026-04-06
+**Core Value:** Students can run code that demonstrates every CCA Customer Support anti-pattern failure and its correct architectural fix
+
+## v1.1 Requirements
+
+Requirements for the Notebook Fixes milestone. Each maps to roadmap phases.
+
+### Notebook Bugs
+
+- [ ] **NBFIX-01**: NB04 cost optimization notebook runs end-to-end without TypeError on `make_services()` — seed customer data must be passed to `CustomerDatabase()`
+- [ ] **NBFIX-02**: NB05 context management anti-pattern demo runs end-to-end without TypeError on `make_services()` — same root cause as NBFIX-01
+- [ ] **NBFIX-03**: NB01 correct-pattern escalation cell produces non-empty escalation queue for $600 refund scenario — callbacks.py must fire the >$500 rule
+
+### Notebook Completion
+
+- [ ] **NBCOMP-01**: NB06 handoffs notebook has no remaining TODO markers, no duplicate code cells, and comparison output is verified correct
+- [ ] **NBCOMP-02**: NB07 integration notebook has no remaining TODO markers and all 6 pattern sections execute correctly
+
+## v2 Requirements
+
+(None deferred — v1.1 is a focused fix release)
+
+## Out of Scope
+
+| Feature | Reason |
+|---------|--------|
+| New notebooks | v1.1 fixes existing only |
+| Package code changes beyond bug fixes | Only change `src/` if needed to fix notebook behavior |
+| CI/CD updates | NB08 and CI workflow not affected |
+| Streamlit UI | Deferred from v1.0, still out of scope |
+
+## Traceability
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| NBFIX-01 | TBD | Pending |
+| NBFIX-02 | TBD | Pending |
+| NBFIX-03 | TBD | Pending |
+| NBCOMP-01 | TBD | Pending |
+| NBCOMP-02 | TBD | Pending |
+
+**Coverage:**
+- v1.1 requirements: 5 total
+- Mapped to phases: 0
+- Unmapped: 5 (pending roadmap)
+
+---
+*Requirements defined: 2026-04-06*
+*Last updated: 2026-04-06 after v1.1 milestone start*
