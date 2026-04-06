@@ -34,7 +34,10 @@
   1. NB04 runs end-to-end without TypeError — cost optimization cells complete and print usage output
   2. NB05 anti-pattern demo cell runs end-to-end without TypeError — context management comparison executes
   3. NB01 correct-pattern escalation cell produces a non-empty escalation queue entry for the $600 refund scenario
-**Plans**: TBD
+**Plans**: 1 plan
+
+Plans:
+- [ ] 07-01-PLAN.md — Fix make_services() in NB04/NB05 and escalation message in NB01
 
 ### Phase 8: Notebook Completion
 **Goal**: NB06 and NB07 have no remaining TODO markers and all sections produce verified correct output
@@ -56,11 +59,11 @@
 | 4. Caching and Context, NB04-05 | v1.0 | 2/2 | Complete | 2026-03-27 |
 | 5. Handoffs, Integration, NB06-07 | v1.0 | 2/2 | Complete | 2026-03-27 |
 | 6. Testing and CI/CD, NB08 | v1.0 | 2/2 | Complete | 2026-03-28 |
-| 7. Notebook Bug Fixes | v1.1 | 0/? | Not started | - |
+| 7. Notebook Bug Fixes | v1.1 | 0/1 | Not started | - |
 | 8. Notebook Completion | v1.1 | 0/? | Not started | - |
 
 **v1.0 Total:** 6 phases, 13 plans, 234 tests, 9 notebooks
-**v1.1 Total:** 2 phases, TBD plans
+**v1.1 Total:** 2 phases, 1 plan (Phase 7) + TBD (Phase 8)
 
 ---
 
