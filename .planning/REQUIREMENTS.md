@@ -9,9 +9,9 @@ Requirements for the Notebook Fixes milestone. Each maps to roadmap phases.
 
 ### Notebook Bugs
 
-- [ ] **NBFIX-01**: NB04 cost optimization notebook runs end-to-end without TypeError on `make_services()` — seed customer data must be passed to `CustomerDatabase()`
-- [ ] **NBFIX-02**: NB05 context management anti-pattern demo runs end-to-end without TypeError on `make_services()` — same root cause as NBFIX-01
-- [ ] **NBFIX-03**: NB01 correct-pattern escalation cell produces non-empty escalation queue for $600 refund scenario — callbacks.py must fire the >$500 rule
+- [x] **NBFIX-01**: NB04 cost optimization notebook runs end-to-end without TypeError on `make_services()` — seed customer data must be passed to `CustomerDatabase()`
+- [x] **NBFIX-02**: NB05 context management anti-pattern demo runs end-to-end without TypeError on `make_services()` — same root cause as NBFIX-01
+- [x] **NBFIX-03**: NB01 correct-pattern escalation cell produces non-empty escalation queue for $600 refund scenario — callbacks.py must fire the >$500 rule
 
 ### Notebook Completion
 
@@ -35,9 +35,9 @@ Requirements for the Notebook Fixes milestone. Each maps to roadmap phases.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| NBFIX-01 | Phase 7 | Pending |
-| NBFIX-02 | Phase 7 | Pending |
-| NBFIX-03 | Phase 7 | Pending |
+| NBFIX-01 | Phase 7 | Complete |
+| NBFIX-02 | Phase 7 | Complete |
+| NBFIX-03 | Phase 7 | Complete |
 | NBCOMP-01 | Phase 8 | Pending |
 | NBCOMP-02 | Phase 8 | Pending |
 

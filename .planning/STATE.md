@@ -1,15 +1,15 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.1
-milestone_name: Notebook Fixes
-status: roadmap-ready
-stopped_at: null
-last_updated: "2026-04-06T00:00:00.000Z"
+milestone_name: — Notebook Fixes
+status: unknown
+stopped_at: Completed 07-01-PLAN.md
+last_updated: "2026-04-06T20:18:13.257Z"
 progress:
   total_phases: 2
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  completed_phases: 1
+  total_plans: 1
+  completed_plans: 1
 ---
 
 # Project State
@@ -19,16 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-06)
 
 **Core value:** Students can run code that demonstrates every CCA Customer Support anti-pattern failure and its correct architectural fix
-**Current focus:** v1.1 Notebook Fixes — Phase 7 (Notebook Bug Fixes) ready for planning
+**Current focus:** Phase 07 — notebook-bug-fixes
 
 ## Current Position
 
-Phase: Phase 7 (not started)
-Plan: —
-Status: Roadmap defined — ready for plan-phase
-Last activity: 2026-04-06 — v1.1 roadmap created (Phases 7-8)
-
-Progress: [----------] 0/2 phases complete
+Phase: 07 (notebook-bug-fixes) — EXECUTING
+Plan: 1 of 1
 
 ## Performance Metrics
 
@@ -68,6 +64,7 @@ Progress: [----------] 0/2 phases complete
 | Phase 05-handoffs-integration-and-student-polish P02 | 20 | 2 tasks | 3 files |
 | Phase 06-testing-and-ci-cd P01 | 5 | 2 tasks | 3 files |
 | Phase 06-testing-and-ci-cd P02 | 3 | 2 tasks | 3 files |
+| Phase 07-notebook-bug-fixes P01 | 15 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -113,6 +110,9 @@ Recent decisions affecting current work:
 - [Phase 06-testing-and-ci-cd]: NB08 has verification code cell that checks all 6 CI flags with PASS/FAIL output for student reference
 - [v1.1 Roadmap]: NBFIX-01 and NBFIX-02 share root cause (make_services() missing seed data) — grouped into Phase 7
 - [v1.1 Roadmap]: Phase 8 depends on Phase 7 because NB07 integration exercises the escalation path fixed in Phase 7
+- [Phase 07-notebook-bug-fixes]: NB04/NB05 make_services() requires CUSTOMERS dict passed to CustomerDatabase — no default empty init
+- [Phase 07-notebook-bug-fixes]: AgentResult exposes .final_text not .final_response — all notebook cells use .final_text
+- [Phase 07-notebook-bug-fixes]: NB01 scenario messages prepend customer ID so agent calls lookup_customer immediately without asking
 
 ### Pending Todos
 
@@ -128,7 +128,7 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-04-06
-Stopped at: v1.1 roadmap created — Phases 7 and 8 defined
+Last session: 2026-04-06T20:18:13.254Z
+Stopped at: Completed 07-01-PLAN.md
 Resume file: None
 Next action: `/gsd:plan-phase 7`
