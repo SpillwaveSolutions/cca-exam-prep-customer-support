@@ -105,6 +105,7 @@ Recent decisions affecting current work:
 ### Pending Todos
 
 1. Fix $600 refund escalation not triggering in correct pattern (area: agent) — `.planning/todos/pending/2026-04-06-fix-600-refund-escalation-not-triggering.md`
+2. Fix CustomerDatabase init in cost optimization notebook (area: testing) — `.planning/todos/pending/2026-04-06-fix-customerdatabase-init-in-cost-optimization-notebook.md`
 
 ### Blockers/Concerns
 
