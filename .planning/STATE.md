@@ -108,6 +108,7 @@ Recent decisions affecting current work:
 2. Fix CustomerDatabase init in cost optimization notebook (area: testing) — `.planning/todos/pending/2026-04-06-fix-customerdatabase-init-in-cost-optimization-notebook.md`
 3. Fix context management notebook anti-pattern demo (area: testing) — `.planning/todos/pending/2026-04-06-fix-context-management-notebook-anti-pattern-demo.md`
 4. Review and complete handoffs notebook output and TODOs (area: testing) — `.planning/todos/pending/2026-04-06-review-and-complete-handoffs-notebook-output-and-todos.md`
+5. Complete integration notebook TODOs (area: testing) — `.planning/todos/pending/2026-04-06-complete-integration-notebook-todos.md`
 
 ### Blockers/Concerns
 
