@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: — Notebook Fixes
 status: unknown
-stopped_at: Completed 07-01-PLAN.md
-last_updated: "2026-04-06T22:23:56.080Z"
+stopped_at: Completed 08-01-PLAN.md
+last_updated: "2026-04-07T03:01:21.859Z"
 progress:
   total_phases: 2
-  completed_phases: 1
-  total_plans: 1
-  completed_plans: 1
+  completed_phases: 2
+  total_plans: 2
+  completed_plans: 2
 ---
 
 # Project State
@@ -19,11 +19,11 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-06)
 
 **Core value:** Students can run code that demonstrates every CCA Customer Support anti-pattern failure and its correct architectural fix
-**Current focus:** Phase 07 — notebook-bug-fixes
+**Current focus:** Phase 08 — notebook-completion
 
 ## Current Position
 
-Phase: 07 (notebook-bug-fixes) — EXECUTING
+Phase: 08 (notebook-completion) — EXECUTING
 Plan: 1 of 1
 
 ## Performance Metrics
@@ -65,6 +65,7 @@ Plan: 1 of 1
 | Phase 06-testing-and-ci-cd P01 | 5 | 2 tasks | 3 files |
 | Phase 06-testing-and-ci-cd P02 | 3 | 2 tasks | 3 files |
 | Phase 07-notebook-bug-fixes P01 | 15 | 2 tasks | 3 files |
+| Phase 08-notebook-completion P01 | 3 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -113,6 +114,8 @@ Recent decisions affecting current work:
 - [Phase 07-notebook-bug-fixes]: NB04/NB05 make_services() requires CUSTOMERS dict passed to CustomerDatabase — no default empty init
 - [Phase 07-notebook-bug-fixes]: AgentResult exposes .final_text not .final_response — all notebook cells use .final_text
 - [Phase 07-notebook-bug-fixes]: NB01 scenario messages prepend customer ID so agent calls lookup_customer immediately without asking
+- [Phase 08-notebook-completion]: NB07 required 7 skip-execution-tagged cells (not 5) — cells 13 and 17 reference result.tool_calls/result.messages downstream of API call
+- [Phase 08-notebook-completion]: Headless notebook test adds notebooks/ to sys.path before exec() so helpers module is importable when pytest runs from project root
 
 ### Pending Todos
 
@@ -128,7 +131,7 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-04-06T20:18:13.254Z
-Stopped at: Completed 07-01-PLAN.md
+Last session: 2026-04-07T03:01:21.856Z
+Stopped at: Completed 08-01-PLAN.md
 Resume file: None
 Next action: `/gsd:plan-phase 7`

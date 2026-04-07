@@ -22,7 +22,7 @@
 ### v1.1 — Notebook Fixes
 
 - [x] **Phase 7: Notebook Bug Fixes** — Fix three broken notebook cells (seed data + escalation callback) (completed 2026-04-06)
-- [ ] **Phase 8: Notebook Completion** — Complete remaining TODOs and verify output in NB06 and NB07
+- [x] **Phase 8: Notebook Completion** — Complete remaining TODOs and verify output in NB06 and NB07 (completed 2026-04-07)
 
 ## Phase Details
 
@@ -63,7 +63,7 @@ Plans:
 | 5. Handoffs, Integration, NB06-07 | v1.0 | 2/2 | Complete | 2026-03-27 |
 | 6. Testing and CI/CD, NB08 | v1.0 | 2/2 | Complete | 2026-03-28 |
 | 7. Notebook Bug Fixes | v1.1 | 1/1 | Complete | 2026-04-06 |
-| 8. Notebook Completion | v1.1 | 0/1 | Not started | - |
+| 8. Notebook Completion | 1/1 | Complete   | 2026-04-07 | - |
 
 **v1.0 Total:** 6 phases, 13 plans, 234 tests, 9 notebooks
 **v1.1 Total:** 2 phases, 1 plan (Phase 7) + 1 plan (Phase 8)
