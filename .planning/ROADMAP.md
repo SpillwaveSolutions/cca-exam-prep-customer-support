@@ -47,7 +47,10 @@ Plans:
   1. NB06 contains no TODO markers, has no duplicate code cells, and the anti-pattern vs correct-pattern comparison output is verified correct
   2. NB07 contains no TODO markers and all 6 pattern sections execute to completion with output visible in each cell
   3. Both notebooks run clean from top to bottom in a fresh kernel (Restart and Run All)
-**Plans**: TBD
+**Plans**: 1 plan
+
+Plans:
+- [ ] 08-01-PLAN.md — Tag API-dependent cells, clean up NB06/NB07, add headless execution tests
 
 ## Progress
 
@@ -59,11 +62,11 @@ Plans:
 | 4. Caching and Context, NB04-05 | v1.0 | 2/2 | Complete | 2026-03-27 |
 | 5. Handoffs, Integration, NB06-07 | v1.0 | 2/2 | Complete | 2026-03-27 |
 | 6. Testing and CI/CD, NB08 | v1.0 | 2/2 | Complete | 2026-03-28 |
-| 7. Notebook Bug Fixes | 1/1 | Complete   | 2026-04-06 | - |
-| 8. Notebook Completion | v1.1 | 0/? | Not started | - |
+| 7. Notebook Bug Fixes | v1.1 | 1/1 | Complete | 2026-04-06 |
+| 8. Notebook Completion | v1.1 | 0/1 | Not started | - |
 
 **v1.0 Total:** 6 phases, 13 plans, 234 tests, 9 notebooks
-**v1.1 Total:** 2 phases, 1 plan (Phase 7) + TBD (Phase 8)
+**v1.1 Total:** 2 phases, 1 plan (Phase 7) + 1 plan (Phase 8)
 
 ---
 
