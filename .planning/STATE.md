@@ -1,10 +1,10 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.1
-milestone_name: — Notebook Fixes
-status: unknown
-stopped_at: Completed 08-01-PLAN.md
-last_updated: "2026-04-07T03:01:21.859Z"
+milestone_name: Notebook Fixes
+status: completed
+stopped_at: Milestone v1.1 archived
+last_updated: "2026-04-07T22:45:00.000Z"
 progress:
   total_phases: 2
   completed_phases: 2
@@ -16,122 +16,43 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-04-06)
+See: .planning/PROJECT.md (updated 2026-04-07)
 
 **Core value:** Students can run code that demonstrates every CCA Customer Support anti-pattern failure and its correct architectural fix
-**Current focus:** Phase 08 — notebook-completion
+**Current focus:** Milestone v1.1 complete — ready for next milestone
 
 ## Current Position
 
-Phase: 08 (notebook-completion) — EXECUTING
-Plan: 1 of 1
+Milestone v1.1 shipped. No active phase.
 
 ## Performance Metrics
 
-**Velocity:**
+**v1.1 Velocity:**
 
-- Total plans completed: 0 (v1.1)
-- Average duration: -
-- Total execution time: 0 hours
+| Phase | Plans | Duration | Files |
+|-------|-------|----------|-------|
+| 7. Notebook Bug Fixes P01 | 1 | 15 min | 3 files |
+| 8. Notebook Completion P01 | 1 | 3 min | 4 files |
 
-**By Phase (v1.1):**
-
-| Phase | Plans | Total | Avg/Plan |
-|-------|-------|-------|----------|
-| 7. Notebook Bug Fixes | 0 | - | - |
-| 8. Notebook Completion | 0 | - | - |
-
-**Recent Trend:**
-
-- Last 5 plans: none (v1.1 not started)
-- Trend: N/A
-
-*Updated after each plan completion*
-
-**v1.0 historical (reference):**
-
-| Phase | Plans | Tasks | Files |
-|-------|-------|-------|-------|
-| Phase 01-project-foundation P01 | 2 | 2 tasks | 15 files |
-| Phase 01-project-foundation P02 | 5 | 2 tasks | 4 files |
-| Phase 02-models-services-and-core-loop P01 | 184 | 2 tasks | 13 files |
-| Phase 02-models-services-and-core-loop P02 | 232 | 2 tasks | 11 files |
-| Phase 03-callbacks-enforcement-and-first-notebooks P01 | 314 | 2 tasks | 6 files |
-| Phase 03-callbacks-enforcement-and-first-notebooks P03 | 292 | 2 tasks | 4 files |
-| Phase 04-caching-and-context-notebooks P01 | 6 | 2 tasks | 9 files |
-| Phase 04-caching-and-context-notebooks P02 | 5 | 2 tasks | 3 files |
-| Phase 05-handoffs-integration-and-student-polish P01 | 35 | 2 tasks | 7 files |
-| Phase 05-handoffs-integration-and-student-polish P02 | 20 | 2 tasks | 3 files |
-| Phase 06-testing-and-ci-cd P01 | 5 | 2 tasks | 3 files |
-| Phase 06-testing-and-ci-cd P02 | 3 | 2 tasks | 3 files |
-| Phase 07-notebook-bug-fixes P01 | 15 | 2 tasks | 3 files |
-| Phase 08-notebook-completion P01 | 3 | 2 tasks | 4 files |
+**Total:** 2 plans, 4 tasks, ~18 min execution
 
 ## Accumulated Context
 
 ### Decisions
 
-Decisions are logged in PROJECT.md Key Decisions table.
-Recent decisions affecting current work:
-
-- Roadmap: 6 phases following dependency graph (models -> services -> tools -> callbacks -> agents -> notebooks)
-- Roadmap: Phases 3 and 4 are architecturally independent (both need Phase 2, not each other)
-- Roadmap: CI/CD and CLAUDE.md meta-teaching deferred to Phase 6 (last, per research recommendation)
-- [Phase 01-project-foundation]: Phase 1 __init__.py kept minimal (version + docstring only) to avoid ImportError from missing Phase 2 modules
-- [Phase 01-project-foundation]: Pre-commit hook mode for nbstripout (not git filter) for explicit, auditable behavior
-- [Phase 01-project-foundation]: ruff types_or: [python, pyi, jupyter] required for notebook linting to include .ipynb files
-- [Phase 01-project-foundation]: Use (major, minor) tuple comparison instead of sys.version_info >= (3, 13) in notebooks to avoid ruff UP036 error under py313 minimum
-- [Phase 01-project-foundation]: Hardcoded cost rate constants in helpers.py (_PRICE_INPUT=3.00, etc.) for student visibility
-- [Phase 02-models-services-and-core-loop]: Used StrEnum instead of (str, Enum) for CustomerTier to comply with ruff UP042
-- [Phase 02-models-services-and-core-loop]: FinancialSystem.process_refund takes policy_approved bool — FinancialSystem trusts PolicyEngine, no re-evaluation
-- [Phase 02-models-services-and-core-loop]: requires_review is amount > 500 regardless of tier — VIP $4000 still triggers review
-- [Phase 02-models-services-and-core-loop]: Tool descriptions use lowercase 'does NOT' — CCA-compliant and test-matching
-- [Phase 02-models-services-and-core-loop]: Agent loop checks stop_reason != 'tool_use' (not == 'end_turn') to handle max_tokens and other stop reasons gracefully
-- [Phase 02-models-services-and-core-loop]: Tool result messages contain ONLY tool_result blocks — no text alongside (avoids Claude API pitfall)
-- [Phase 03-callbacks-enforcement-and-first-notebooks]: compliance_callback handles both flat {details} and nested {entry.details} shapes to match log_interaction output format
-- [Phase 03-callbacks-enforcement-and-first-notebooks]: context dict created in run_agent_loop so all tool calls in a session share escalation state across iterations
-- [Phase 03-callbacks-enforcement-and-first-notebooks]: run_agent_loop extended with optional tools parameter (default None = TOOLS); Swiss Army anti-pattern passes SWISS_ARMY_TOOLS
-- [Phase 03-callbacks-enforcement-and-first-notebooks]: Notebook imports: helpers (local first-party) before customer_service (project) to satisfy isort I001
-- [Phase 03-callbacks-enforcement-and-first-notebooks]: make_services() helper in notebooks for explicit ServiceContainer construction (frozen dataclass, no defaults)
-- [Phase 04-caching-and-context-notebooks]: POLICY_DOCUMENT sized to 4079 tokens (far above 2048-token minimum) using real policy content in 7 sections
-- [Phase 04-caching-and-context-notebooks]: TOKEN_BUDGET=300 chars (~75 tokens); compaction fires around update 7-8 keeping estimate well under budget
-- [Phase 04-caching-and-context-notebooks]: tools_called internal list never compacted; to_system_context() uses tools_called[-5:] for display only
-- [Phase 04-caching-and-context-notebooks]: agent_loop system_prompt type widened to str | list[dict] — no logic change, SDK handles both natively
-- [Phase 04-caching-and-context-notebooks]: _UsageWrapper inline in NB04 code cells — bridges AgentResult.usage to print_usage without external dependency
-- [Phase 04-caching-and-context-notebooks]: NB05 per-turn cell pairs for pedagogical visibility of O(n) transcript growth; birthday fact in pending_actions survives compaction
-- [Phase 05-handoffs-integration-and-student-polish]: tool_choice forced escalation: _has_escalation_required detects blocked refunds; second API call with tool_choice=escalate_to_human; stop_reason='escalated' overrides forced response stop_reason
-- [Phase 05-handoffs-integration-and-student-polish]: coordinator isolation: subagent receives only explicit context string (Customer ID, tier, task, details) — never coordinator messages list or system prompt
-- [Phase 05-handoffs-integration-and-student-polish]: NB06 reuses single agent loop run for both anti-pattern and correct pattern sections — avoids double API call, cleaner pedagogy
-- [Phase 05-handoffs-integration-and-student-polish]: NB07 uses shared services/result across all 6 pattern sections — one scenario exercises all patterns in order
-- [Phase 05-handoffs-integration-and-student-polish]: TODO-2 uses student_customer = None conditional guard (not try/except) — more Pythonic for data setup TODOs
-- [Phase 06-testing-and-ci-cd]: CI workflow is itself a CCA teaching artifact — every flag has an inline exam comment
-- [Phase 06-testing-and-ci-cd]: jq -r '.result' extracts text from --output-format json envelope before gh pr comment (CCA CI/CD rule)
-- [Phase 06-testing-and-ci-cd]: Gap analysis maps 100 automated tests + 19 manual checks; zero genuine gaps in CCA behavioral coverage
-- [Phase 06-testing-and-ci-cd]: Blue border (#2196F3) for meta-teaching callouts — distinct from red (anti-pattern) and green (correct) CCA Exam Tip boxes
-- [Phase 06-testing-and-ci-cd]: NB08 has verification code cell that checks all 6 CI flags with PASS/FAIL output for student reference
-- [v1.1 Roadmap]: NBFIX-01 and NBFIX-02 share root cause (make_services() missing seed data) — grouped into Phase 7
-- [v1.1 Roadmap]: Phase 8 depends on Phase 7 because NB07 integration exercises the escalation path fixed in Phase 7
-- [Phase 07-notebook-bug-fixes]: NB04/NB05 make_services() requires CUSTOMERS dict passed to CustomerDatabase — no default empty init
-- [Phase 07-notebook-bug-fixes]: AgentResult exposes .final_text not .final_response — all notebook cells use .final_text
-- [Phase 07-notebook-bug-fixes]: NB01 scenario messages prepend customer ID so agent calls lookup_customer immediately without asking
-- [Phase 08-notebook-completion]: NB07 required 7 skip-execution-tagged cells (not 5) — cells 13 and 17 reference result.tool_calls/result.messages downstream of API call
-- [Phase 08-notebook-completion]: Headless notebook test adds notebooks/ to sys.path before exec() so helpers module is importable when pytest runs from project root
+Decisions archived in PROJECT.md Key Decisions table and `.planning/milestones/v1.1-ROADMAP.md`.
 
 ### Pending Todos
 
-1. Fix $600 refund escalation not triggering in correct pattern (area: agent) — `.planning/todos/pending/2026-04-06-fix-600-refund-escalation-not-triggering.md`
-2. Fix CustomerDatabase init in cost optimization notebook (area: testing) — `.planning/todos/pending/2026-04-06-fix-customerdatabase-init-in-cost-optimization-notebook.md`
-3. Fix context management notebook anti-pattern demo (area: testing) — `.planning/todos/pending/2026-04-06-fix-context-management-notebook-anti-pattern-demo.md`
-4. Review and complete handoffs notebook output and TODOs (area: testing) — `.planning/todos/pending/2026-04-06-review-and-complete-handoffs-notebook-output-and-todos.md`
-5. Complete integration notebook TODOs (area: testing) — `.planning/todos/pending/2026-04-06-complete-integration-notebook-todos.md`
+(All v1.1 todos resolved)
 
 ### Blockers/Concerns
 
-(none — v1.1 roadmap defined, ready to plan Phase 7)
+(none)
 
 ## Session Continuity
 
-Last session: 2026-04-07T03:01:21.856Z
-Stopped at: Completed 08-01-PLAN.md
+Last session: 2026-04-07
+Stopped at: Milestone v1.1 archived
 Resume file: None
-Next action: `/gsd:plan-phase 7`
+Next action: `/gsd:new-milestone` or `/clear` for fresh context
