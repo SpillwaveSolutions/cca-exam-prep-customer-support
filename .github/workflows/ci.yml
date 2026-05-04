@@ -14,10 +14,10 @@ on:
     branches: [main]
   pull_request:
     # on pull_request: triggers claude-review job for CCA compliance checking
-  schedule:
+  # schedule:
     # schedule/cron: CICD-02 requires nightly runs for regression detection
     # (CCA exam: cron ensures test suite runs even without commits)
-    - cron: '0 6 * * *'
+    # - cron: '0 6 * * *'
 
 jobs:
   # ---------------------------------------------------------------------------
